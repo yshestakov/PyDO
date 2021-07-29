@@ -1,0 +1,53 @@
+.. -*-rst-*-
+
+PyDO is a ORM (Object-Relational Mapper) database access library for
+Python that facilitates writing a Python database access layer.  PyDO
+attempts to be simple, flexible, extensible, and unconstraining.
+
+PyDO was originally written by Drew Csillag in 2000, with
+contributions and maintainance by Jacob Smullyan and others (see
+ACKNOWLEDGEMENTS), and was released as part of the SkunkWeb_ web
+application server.  The 2.0 series is a fairly far-reaching overhaul
+of the codebase undertaken by JS.  (The old PyDO version is still
+available in SkunkWeb 3.4.0.)
+
+.. _Skunkweb: http://www.skunkweb.org/
+
+The previous version of PyDO supported PostgreSQL with three different
+database adapters, Mysql, SapDB, Sqlite, and Oracle.  The 2.0 series
+currently supports PostgreSQL (with the psycopg driver), Mysql,
+Sqlite, Oracle (with the cx_oracle driver) and MS SQLServer (with the
+adodbapi driver); support for other database systems is planned.
+
+PyDO 2 has several enhancements:
+
+   * PyDO can now be used in multi-threaded or twisted-style
+     asynchronous sitations, with or without a customizable connection
+     pool.
+
+   * PyDO objects are now dict subclasses, but also support attribute
+     access to fields.
+
+   * Projections -- subsets of the field list of a super-class -- are
+     now supported by the PyDO.project() method.
+
+   * PyDO classes can now introspect into the database at runtime to
+     obtain field information (not yet implemented for Oracle driver).
+
+   * Overall, the API has been tightened and the code restructured.
+
+PyDO 2 requires Python 2.4 or later.
+
+More documentation is available in the doc/ subdirectory of the PyDO
+distribution:  
+
+    * the PyDO manual (manual.rst)
+    * epydoc-generated API documentation (in api/html)
+
+Questions about PyDO can be raised on the `SkunkWeb mailing list`_.
+
+.. _SkunkWeb mailing list: http://lists.sourceforge.net/lists/listinfo/skunkweb-list
+
+This library is available under either of two licenses: the GNU Public
+License (see COPYING) or a BSD license (see LICENSE).
+

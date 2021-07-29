@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pydo.base</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="pydo-module.html">Package&nbsp;pydo</a> ::
+        Module&nbsp;base
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/pydo.base-module.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="pydo.base-module.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF MODULE DESCRIPTION =========== -->
+<h2 class="module">Module pydo.base</h2>
+
+
+<!-- =========== START OF CLASSES =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Classes</th></tr>
+<tr><td width="15%">
+  <b><a href="pydo.base.ForeignKey-class.html"><code>ForeignKey</code></a></b></td>
+  <td>descriptor that enables succinct creation of foreign key attributes.</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.base.PyDO-class.html"><code>PyDO</code></a></b></td>
+  <td>Base class for PyDO data classes.</td></tr>
+</table><br />
+
+
+<!-- =========== START OF FUNCTION SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Function Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base-module.html#autoschema" class="summary-sig-name"><code>autoschema</code></a>(<span class=summary-sig-arg>alias</span>,
+          <span class=summary-sig-arg>schema</span>,
+          <span class=summary-sig-arg>guesscache</span>,
+          <span class=summary-sig-arg>module</span>,
+          <span class=summary-sig-arg>sequence_mapper</span>)</span></code>
+<br />
+returns a dictionary of PyDO objects created automatically by
+schema introspection, keyed by class name.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="ManyToMany"></a><span class="summary-sig"><span class="summary-sig-name">ManyToMany</span>(<span class=summary-sig-arg>this_side</span>,
+          <span class=summary-sig-arg>pivot_table</span>,
+          <span class=summary-sig-arg>this_pivot_side</span>,
+          <span class=summary-sig-arg>that_pivot_side</span>,
+          <span class=summary-sig-arg>kls</span>,
+          <span class=summary-sig-arg>that_side</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base-module.html#OneToMany" class="summary-sig-name"><code>OneToMany</code></a>(<span class=summary-sig-arg>this_side</span>,
+          <span class=summary-sig-arg>that_side</span>,
+          <span class=summary-sig-arg>kls</span>)</span></code>
+<br />
+function to define an accessor to a 1-to-many relation.</td></tr>
+</table><br />
+
+
+<!-- =========== START OF FUNCTION DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Function Details</th></tr>
+</table>
+
+<a name="autoschema"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">autoschema</span>(<span class=sig-arg>alias</span>,
+          <span class=sig-arg>schema</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>guesscache</span>=<span class=sig-default>True</span>,
+          <span class=sig-arg>module</span>=<span class=sig-default>None</span>,
+          <span class=sig-arg>sequence_mapper</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+<pre class="literalblock">
+returns a dictionary of PyDO objects created automatically by
+schema introspection, keyed by class name.  Typical usage:
+
+  globals().update(autoschema('myalias'))
+
+The PyDO objects created are extremely bare, but may be enough for
+quick scripts.   If you want to pickle them, pass in a module
+for them to live in for the &quot;module&quot; parameter.
+</pre>
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="OneToMany"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">OneToMany</span>(<span class=sig-arg>this_side</span>,
+          <span class=sig-arg>that_side</span>,
+          <span class=sig-arg>kls</span>)</span>
+  </h3>
+  function to define an accessor to a 1-to-many relation.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.0 on Thu Feb 15 13:21:45 2007</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

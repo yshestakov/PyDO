@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module and Class Hierarchies</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th bgcolor="#70b0f0" class="navselect">&nbsp;&nbsp;&nbsp;Trees&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/trees.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="trees.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF MODULE HIERARCHY =========== -->
+<h2>Module Hierarchy</h2>
+<ul>
+<li> <b><a href="pydo-module.html"><code>pydo</code></a></b>: <i>PyDO (Python Data Objects) is an object-relational wrapper for
+relational databases.</i>
+  <ul>
+    <li> <b><a href="pydo.base-module.html"><code>base</code></a></b>
+    <li> <b><a href="pydo.dbi-module.html"><code>dbi</code></a></b>
+    <li> <b><a href="pydo.dbtypes-module.html"><code>dbtypes</code></a></b>: <i>The dbtypes module contains generic type wrapper classes for values 
+passed into PyDO, to provide type information useful into marshalling the 
+data into SQL according to the intended datatype.</i>
+    <li> <b><a href="pydo.drivers-module.html"><code>drivers</code></a></b>
+      <ul>
+        <li> <b><a href="pydo.drivers.mssqlconn-module.html"><code>mssqlconn</code></a></b>: <i>PyDO driver for mssql, using the ADO adapter.</i>
+        <li> <b><a href="pydo.drivers.mysqlconn-module.html"><code>mysqlconn</code></a></b>: <i>PyDO driver for MySQL, using the MySQLdb driver.</i>
+        <li> <b><a href="pydo.drivers.oracleconn-module.html"><code>oracleconn</code></a></b>
+        <li> <b><a href="pydo.drivers.psycopgconn-module.html"><code>psycopgconn</code></a></b>: <i>PyDO driver for PostgreSQL, using the psycopg driver.</i>
+        <li> <b><a href="pydo.drivers.sqliteconn-module.html"><code>sqliteconn</code></a></b>: <i>PyDO driver for sqlite, using the pysqlite adapter.</i>
+      </ul>
+    <li> <b><a href="pydo.exceptions-module.html"><code>exceptions</code></a></b>
+    <li> <b><a href="pydo.field-module.html"><code>field</code></a></b>
+    <li> <b><a href="pydo.guesscache-module.html"><code>guesscache</code></a></b>
+    <li> <b><a href="pydo.log-module.html"><code>log</code></a></b>
+    <li> <b><a href="pydo.multifetch-module.html"><code>multifetch</code></a></b>
+    <li> <b><a href="pydo.operators-module.html"><code>operators</code></a></b>: <i>This module permits a useful subset of SQL where clauses to be defined 
+with a Lispo-Pythonic syntax:</i>
+    <li> <b><a href="pydo.utils-module.html"><code>utils</code></a></b>: <i>utility functions imported by other PyDO modules.</i>
+  </ul>
+</ul>
+
+<!-- =========== START OF CLASS HIERARCHY =========== -->
+<h2>Class Hierarchy</h2>
+<ul>
+  <li> <b><a href="__builtin__.object-class.html"><code>__builtin__.object</code></a></b>: <i>
+The most base type</i>
+    <ul>
+  <li> <b><a href="pydo.operators.BindingConverter-class.html"><code>pydo.operators.BindingConverter</code></a></b>: <i>
+A value converter that uses bind variables.</i>
+    <ul>
+  <li> <b><a href="pydo.drivers.mssqlconn.MssqlConverter-class.html"><code>pydo.drivers.mssqlconn.MssqlConverter</code></a></b>
+  <li> <b><a href="pydo.drivers.mysqlconn.MysqlConverter-class.html"><code>pydo.drivers.mysqlconn.MysqlConverter</code></a></b>
+  <li> <b><a href="pydo.drivers.psycopgconn.PsycopgConverter-class.html"><code>pydo.drivers.psycopgconn.PsycopgConverter</code></a></b>
+  <li> <b><a href="pydo.drivers.sqliteconn.SqliteConverter-class.html"><code>pydo.drivers.sqliteconn.SqliteConverter</code></a></b>
+    </ul>
+  <li> <b><a href="pydo.dbi.ConnectionPool-class.html"><code>pydo.dbi.ConnectionPool</code></a></b>: <i>
+a connection pool for a single connection alias.</i>
+  <li> <b><a href="pydo.operators.CONSTANT-class.html"><code>pydo.operators.CONSTANT</code></a></b>: <i>
+a way to represent a constant or field name in a sql expression</i>
+  <li> <b><a href="__builtin__.dict-class.html"><code>__builtin__.dict</code></a></b>: <i>
+dict() -&gt; new empty dictionary.</i>
+    <ul>
+  <li> <b><a href="pydo.base.PyDO-class.html"><code>pydo.base.PyDO</code></a></b>: <i>
+Base class for PyDO data classes.</i>
+    </ul>
+  <li> <b><a href="pydo.field.Field-class.html"><code>pydo.field.Field</code></a></b>: <i>
+represents a column in a database table.</i>
+    <ul>
+  <li> <b><a href="pydo.field.Sequence-class.html"><code>pydo.field.Sequence</code></a></b>: <i>
+like a Field, except that sequence defaults to True, and the field 
+must be unique.</i>
+  <li> <b><a href="pydo.field.Unique-class.html"><code>pydo.field.Unique</code></a></b>: <i>
+like a Field, except that it must be unique and isn't a sequence (use 
+Sequence for that)</i>
+    </ul>
+  <li> <b><a href="pydo.base.ForeignKey-class.html"><code>pydo.base.ForeignKey</code></a></b>: <i>
+descriptor that enables succinct creation of foreign key attributes.</i>
+  <li> <b><a href="pydo.guesscache.GuessCache-class.html"><code>pydo.guesscache.GuessCache</code></a></b>: <i>
+a cache that stores pickles of data associated with a Python 
+class.</i>
+  <li> <b><a href="pydo.operators.SET-class.html"><code>pydo.operators.SET</code></a></b>: <i>
+a way of passing a set into PyDO where clauses (for IN), e.g.:</i>
+  <li> <b><a href="__builtin__.tuple-class.html"><code>__builtin__.tuple</code></a></b>: <i>
+tuple() -&gt; an empty tuple tuple(sequence) -&gt; tuple initialized 
+from sequence's items</i>
+    <ul>
+  <li> <b><a href="pydo.operators.SQLOperator-class.html"><code>pydo.operators.SQLOperator</code></a></b>: <i>
+A special kind of tuple that knows how to represent itself as a SQL 
+string.</i>
+    <ul>
+    </ul>
+    <ul>
+    </ul>
+    <ul>
+    </ul>
+    </ul>
+  <li> <b><a href="__builtin__.type-class.html"><code>__builtin__.type</code></a></b>: <i>
+type(object) -&gt; the object's type type(name, bases, dict) -&gt; a 
+new type</i>
+    <ul>
+    </ul>
+    <ul>
+    </ul>
+    </ul>
+  <li> <b><a href="exceptions.Exception-class.html"><code>exceptions.Exception</code></a></b>: <i>
+Common base class for all exceptions.</i>
+    <ul>
+  <li> <b><a href="pydo.exceptions.PyDOError-class.html"><code>pydo.exceptions.PyDOError</code></a></b>
+    </ul>
+</ul>
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.0 on Thu Feb 15 13:21:50 2007</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,1005 @@
+2007-02-15  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/__init__.py: upping version to 2.0.1.
+
+2007-02-14    <smulloni@smullyan.org>
+
+	* src/pydo/drivers/sqliteconn2.py: fix converter registration for
+	later versions of pysqlite2.
+
+	* tests/test_base.py (test_as1.run): fix test for sqlite2 bind
+	variable style.
+
+2006-08-03  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/dbi.py (_driverConfig): adding "sqlite3" as alias for
+	sqlite2 driver.
+
+	* tests/test_base.py (test_project10, test_as2): new tests.
+
+	* src/pydo/base.py (PyDO.project): refactored to permit fields to
+	be specified as dicts (e.g., dict(name='foo', asname='nougat')).
+	(_metapydo.__init__): strings like "avg(x) as average_x" are now
+	parsed. 
+
+2006-08-02  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_base.py (test_as1): test for asname.
+
+	* src/pydo/base.py: use new "asname" attribute and
+	get_column_expression. 
+
+	* src/pydo/field.py: support for "asname" attribute in Fields, and
+	added get_column_expression().
+
+2006-06-08  Jacob Smullyan  <smulloni@smullyan.org>
+
+    * src/pydo/multifetch.py (iterfetch): patch from nine_k for when
+    there are no bind variables.
+   
+
+2006-06-07  Jacob Smullyan  <smulloni@smullyan.org>
+
+    * tests/test_dbi.py (test_autocommit2.post): catch and ignore
+    spurious error in post-test step.
+
+2005-06-05  Tim Golden  <mail@timgolden.me.uk>
+
+    * src/pydo/drivers/sqliteconn2.py: added new driver
+    for newer pysqlite2/sqlite3 functionality. Specific
+    changes: let pysqlite handle conversions. Slight
+    change in the method of fetching last inserted sequence.
+    autocommit - not supported directly by pysqlite2;
+    instead set isolation_level to None.
+	
+    * src/pydo/dbi.py: added sqlite2 as driver name
+	
+    * tests/fixture.py: special-case sqlite2 on cleanup
+
+2006-03-08  Jacob Smullyan  <smulloni@smullyan.org>
+
+    * MANIFEST.in: now including pdfs, thanks to Marien Zwart for
+    pointing out the omission.
+
+2006-03-08  Jacob Smullyan  <smulloni@smullyan.org>
+
+    * doc/Makefile (RST2HTML): changing default paths for rst scripts. 
+
+    * src/pydo/__init__.py: upping version to 2.0.
+
+	* CLASSIFIERS: reclassifying as stable.
+
+2006-02-16  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/base.py (PyDO._sequence_for): don't assume that all
+	drivers have a "sequence_mapper" attribute.
+
+2006-02-16  Hamish Lawson  <hbl@st-andrews.ac.uk>
+
+	* src/pydo/base.py: Moved some sequence-mapping code from
+	_metapydo to new method PyDO._sequence_for.
+    
+	* src/pydo/drivers/oracleconn.py: Tidying up of
+	OracleDBI.describeTable.
+
+2006-02-14  Hamish Lawson  <hbl@st-andrews.ac.uk>
+
+    * src/pydo/base.py: Added sequence_mapper attribute, a function taking 
+	parameters 'table' and 'column' and returning the sequence used in 
+	incrementing a column, for those databases that use a sequence for 
+	autoincrementing.
+    
+	* src/pydo/drivers/oracleconn.py: Added OracleDBI.describeTable.
+
+
+2006-01-13  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/drivers/psycopgconn.py (PsycopgDBI.describeTable): fix
+	for when indkey contains negative attnums in finding indices.
+	(Currently the policy is not to report such indexes at all.)
+
+2005-11-18  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/base.py (PyDO._joinTableSQL): fix for berlios bug #5665
+	-- bind values being passed in wrong order.
+	
+	* tests/test_base.py (test_getCount1): test for getCount.
+
+	* src/pydo/base.py (PyDO.getCount): adding getCount convenience
+	method (closes bug #4712).
+
+2005-11-17  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/__init__.py (__version__): upping version number to
+	2.0rc1. 
+
+	* doc/manual.rst: document the new module parameters to project
+	and autoschema.
+
+	* src/pydo/base.py (PyDO.project): use moduleize when passed in a
+	module. (autoschema): ditto.
+
+	* src/pydo/utils.py (moduleize): convenience function for
+	associating a dynamically created class with a module, in order
+	to pickle or unpickle it.
+
+	* tests/test_base.py (test_one_to_many3): test for 1-2->1 bug.
+
+	* src/pydo/base.py (PyDO._update_raw): use new has_sane_rowcount
+	flag.  This fixes berlios bug #5521.
+	(ForeignKey.getMany): fix for passing a sql string (various typos
+	and thinkos) reported by Jonan Santiago, much thanks.
+
+	* src/pydo/drivers/mysqlconn.py: set has_sane_rowcount to False.
+
+	* src/pydo/dbi.py (has_sane_rowcount): new flag for driver
+	classes, indicating whether we ought to take rowcount seriously or
+	not. 
+
+	* tests/test_base.py (test_update2): excluding mysql from this
+	test, which mysql can't run successfully without failing another
+	test. 
+
+2005-10-12  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_operators.py (test_pickle1), tests/test_fields.py
+	(test_pickle1): tests for pickling. 
+
+	* src/pydo/operators.py, src/pydo/fields.py: define __getstate__
+	and __setstate__ for objects with slots.
+
+	* setup.py: now use setuptools.
+
+2005-10-07  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/multifetch.py (iterfetch): fixed silly error that
+	prevented pyformat or named style parameter passing from working.
+
+2005-09-19  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/base.py (ForeignKey, ManyToMany, OneToMany): using
+	modified string_to_obj, no longer specify frame number.
+
+	* src/pydo/utils.py (string_to_obj): now walks stack frames.
+
+2005-09-09  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/dbi.py (getConnection): added optional argument,
+	"create", defaulting to True, so that it is possible to call
+	getConnection(alias, 0) and get None if there is no connection
+	around, which you might want sometimes.
+
+	* src/pydo/operators.py (_repr_between): fix for BETWEEN operator.
+
+2005-09-06  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/__init__.py (__version__): upping to 2.0b2.
+
+	* src/pydo/base.py (PyDO._new): for postgresql's sake, now call
+	dbi.getSequence with the schema-qualified table name.
+
+	* tests/test_dbi.py (test_describeTable1): psycopg-only test for
+	describeTable with non-default schema.
+
+	* src/pydo/drivers/psycopgconn.py (PsycopgDBI.describeTable): 
+	fix for when the schema is not 'public'.
+
+2005-08-27  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document the acceptance of strings in
+	associations.
+
+	* src/pydo/base.py (ManyToMany, ForeignKey, OneToMany): now
+	accepts strings instead of PyDO classes to facilitate forward
+	declarations of associations; ManyToMany fixed.
+
+2005-08-26  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/utils.py (string_to_obj): evil magic function.
+
+2005-08-19  Jacob Smullyan  <smulloni@smullyan.org>
+	* src/pydo/dbi.py (initAlias): typo -- forgot to assign to "sql".
+	Thanks Matt B.
+	
+	* src/pydo/base.py (PyDO._processWhere): fix for updateSome bug --
+	when passing a sql string to processWhere with a converter, values
+	preexisting in the converter were ignored.
+
+	* tests/test_base.py (test_updateSome3): test for updateSome bug
+	found by Matthew Bogosian.
+
+2005-08-18  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/dbi.py (DBIBase.endConnection): method equivalent to
+	del self.conn.  Also removed autocommit -- the implementation in
+	use only worked for sqlite -- and stopped referring to autocommit
+	in internal dbi code, so it is no longer a performance hit and its
+	accuracy is not critical.  Therefore, execute() no longer returns
+	connections to the pool for autocommit -- hence the endConnection()
+	method.   
+
+	* src/pydo/drivers (all drivers): fiddled with autocommit to make
+	the tests run.  The property is not functional except for sqlite
+	and psycopg version 2.
+
+	* doc/manual.rst: document DBIBase.endConnection().
+
+2005-08-17  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/dbi.py (DBIBase): adding initFunc parameter to
+	base DBI class constructor and connect(); (_real_connect,
+	initAlias): initFunc parameter to _real_connect and init parameter
+	to initAlias. (initAlias): accept list or tuple of strings for
+	init parameter, as well as string and callable.
+
+	* src/pydo/drivers: (all concrete DBI classes): adding
+	initFunc parameter to drivers.
+
+	* src/pydo/dbi.py (_real_connect): preparation for on-connect
+	custom initializers.
+
+	* doc/manual.rst: document dbiObj.exceptions and
+	dbiObj.dbapiModule. 
+
+2005-08-16  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/drivers/: use new base class constructor for all
+	drivers.
+
+	* src/pydo/dbi.py (DBIBase.__init__): constructor now expects a
+	direct reference to the dbapi module.
+	(DBIBase._initExceptions): create a dictionary of standard dbapi
+	exceptions. 
+
+2005-08-12  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/operators.py (SQLOperator._repr_single): peculiar
+	thinko.
+	(__repr_single_isnull): fix for ISNULL and NOTNULL, which were
+	broken. 
+
+2005-08-08  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_dbi.py (test_pool2): test that pool gives different
+	connections for different (active) threads.
+
+2005-08-04  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document the new keyword argument of the
+	project() method.
+
+	* src/pydo/base.py (PyDO.project): accept keyword arguments
+	(currently only "mutable").
+
+	* tests/test_base.py (test_project9): test for projections that
+	override mutability of base class.
+
+
+2005-08-03  Hamish Lawson  <hbl@st-andrews.ac.uk>
+
+	* src/pydo/drivers/oracleconn.py: Added listTables.
+	
+2005-08-01  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document ForeignKey, OneToMany, and ManyToMany. 
+
+	* doc/examples/pim.py: updated to use ForeignKey and ManyToMany.
+
+	* src/pydo/base.py (ManyToMany): utility for creating accessor
+	methods for many-to-many joins.
+
+	* tests/test_base.py (test_many_to_many1): test for ManyToMany.
+
+	* tests/fixture.py (base_fixture): added new table ("F") for
+	OneToMany and ForeignKey tests with multi-column keys.
+
+	* tests/test_base.py (test_one_to_many1, test_one_to_many2): tests
+	for OneToMany. (test_foreignkey2): test for ForeignKey with
+	multi-column FK.
+
+	* src/pydo/base.py (OneToMany): a utility for creating accessor
+	methods for one-to-many associations.
+
+2005-07-28  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_base.py (test_foreignkey1) test of ForeignKey
+	descriptor. 
+
+	* src/pydo/base.py (ForeignKey): a descriptor that makes it easy
+	to create foreign key properties.
+
+2005-07-25  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/__init__.py (__version__): upping version for beta1.
+
+	* tests/test_base.py (test_unique5): renamed test, which shared
+	name with another.
+
+2005-07-22  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: adding note about table name guessing and
+	inheritance. 
+
+	* tests/test_base.py (test_inheritance2): checking that base
+	classes are being processed by the metaclass in the right order.
+
+	* src/pydo/base.py (_metapydo.__init__): new table name
+	inheritance semantics (proposed by Hamish Lawson).
+
+	* tests/test_base.py (test_guess_tablename1): test implementation
+	of new table name inheritance semantics.
+
+2005-07-21  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/base.py (PyDO._uniqueWhere): tighter error handling for
+	unique constraints -- raise ValueError if a NULL is passed to
+	getUnique() or similar methods.  This ensures that meaningless SQL
+	won't be generated (WHERE x=NULL) and gives a clearer error
+	message. 
+
+2005-07-17  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/drivers/psycopgconn.py: added support for new module
+	name for psycopg2 ("psycopg2" as of 2.0b4).
+
+2005-07-16  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document _ignore_update_rowcount.
+
+	* src/pydo/base.py (PyDO): adding _ignore_update_rowcount
+	attribute so that if the driver doesn't return a correct rowcount
+	-- for instance, for an updateable view, as I've seen with
+	postgres -- update can still be made to work.
+
+	* tests/test_base.py (test_update2): update test with out-of-sync
+	object.
+
+	* src/pydo/base.py (PyDO._update_raw): fail if update doesn't
+	affect one row.
+
+	* tests/test_base.py (test_unique4): test that all information
+	passed to getUnique is used (related to discussion of berlios bug
+	#4530).
+
+2005-07-08  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: at a user's request, adding a mention to the
+	manual that PyDO requires Python 2.4.  (berlios bug #4472)
+
+2005-07-07  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_operators.py (test_converter2): test based on Adam
+	Ward's bug report (berlios #4468).
+
+	* src/pydo/base.py (PyDO._processWhere): other half of bug fix for
+	#4468 -- call setConverter on SQLOperator, not x.converter=c,
+	which doesn't recurse.
+
+	* tests/test_operators.py (test_converter1): test for raw strings
+	with embedded single quotes, with and without a converter.
+	Partial test for berlios bug # 4468.
+
+	* src/pydo/operators.py (SQLOperator._convert, sqlquote): handles
+	raw strings better when there is no BindingConverter.  Partial fix
+	for berlios bug #4468.
+
+2005-07-06  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_fields.py (test_getattr1): test for
+	getattr(myPyDOSubclass, fieldname).
+
+	* src/pydo/field.py (Field.__get__): deal with the case of obj
+	being None (for the sake of pydoc, which tries to call the
+	descriptor on the class object).  Thanks to Adam Ward for bug
+	report. 
+
+2005-07-05  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/operators.py (_repr_single_and_or): hack so that AND
+	and OR will work with a single argument (berlios bug #4448).
+
+	* tests/test_operators.py: test for AND with a single argument
+	(berlios bug #4448).
+
+2005-07-05  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_base.py (test_getSome2): test for berlios bug #4445.
+
+	* src/pydo/base.py (PyDO._processWhere): fix for berlios bug #4445:
+	obj.getSome(x=None) should generate SQL "x IS NULL".
+
+2005-07-01  Hamish Lawson  <hbl@st-andrews.ac.uk>
+
+	* src/pydo/drivers/oracleconn.py: use fetchall (rather than iterating over
+	cursor) when resultset doesn't contain LOBs; replace OracleResultSet 
+	class with OracleDBI.field_values method.
+
+2005-07-01  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* ACKNOWLEDGEMENTS: added Robin Brandt, and added notes detailing
+	contributions. 
+
+2005-06-29  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/base.py (PyDO.getSome): tolerate group by statements in
+	sql strings.
+
+	* tests/test_base.py (test_group1): test for toleration of group
+	by statements.
+
+2005-06-27  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/drivers/psycopgconn.py: autocommit implementation for
+	psycopg version 1.
+
+	* tests/test_dbi.py (test_autocommit2): two autocommit tests.
+
+	* doc/manual.rst: remove reference to a non-existent class
+	attribute; cleaned up references to features eliminated in the
+	alpha release phase.
+
+	* tests/test_multifetch.py (test_fetch2): another fetch test.
+
+	* tests/test_guesscache.py (test_guesscache1): test for basic
+	guesscache functionality.
+
+	* src/pydo/drivers/psycopgconn.py (PsycopgDBI.getSequence): only
+	log that the sequence name is being inferred when self.verbose.
+
+	* tests/test_base.py (test_unique3) test for _matchUnique.
+
+	* src/pydo/base.py (PyDO._matchUnique): fixing brain-dead
+	implementation, which was dropping some unique constraints.
+
+2005-06-26  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_base.py (test_refresh2): another refresh test in
+	attempt to find Faber's bug.
+
+2005-06-25  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* TODO: put iterSome in the TODO for 1.1.  (It is being deferred
+	because of it may require a generator that can do resource
+	cleanup.)
+
+	* tests/fixture.py: another table/class ("E").
+
+	* tests/test_base.py (test_project8): test for when projections
+	include columns not included in the base class.  Commented out is 
+	Faber's sneaky aggregate trick.
+
+	* src/pydo/base.py: missing a "not" was breaking uniqueness
+	constraints for projections.
+ 
+	* tests/test_base.py (test_project7): test for bug reported by
+	Faber (Fabio Vescarelli) -- uniqueness constraints were getting
+	lost on projections.
+
+2005-06-24  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* MANIFEST.in: fix to include testingtesting.py in tarball.
+
+	* src/pydo/__init__.py (__version__): version number bumped up to
+	2.0b0 in preparation for release.
+
+	* tests/test_dbi.py (test_pool1): test for connection pool.
+
+2005-06-23  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/dbi.py: removed unused import.
+	(ConnectionPool.release): fix for connection pool (wrong logic for
+	keeping connections).
+
+2005-06-22  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst, src/pydo/base.py (autoschema): change
+	"locals().update" to "globals().update" in docstring of autoschema
+	and corresponding manual documentation  (updating locals is bAAAAd.)
+
+2005-06-21  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/fixture.py: moved base_fixture here from test_base.
+
+	* tests/test_multifetch.py (test_fetch1): first fetch test.
+
+	* doc/manual.rst: section on transactions (suggested by Kieran
+	Holland). 
+
+2005-06-20  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document that None will be stored for columns
+	upon new() if they aren't specified, and there is no refetch.
+
+	* tests/test_base.py: test for new with default values; for
+	refresh, and getSome.
+
+	* src/pydo/base.py (PyDO._new): when creating an object without
+	refetch, add None to the dictionary for any columns that aren't
+	specified in the fieldData.
+
+2005-06-19  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_base.py: two delete tests.
+
+2005-06-16  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: note about mysql's case-sensitivity of table
+	names and the guess_tablename feature.
+
+	* tests/test_base.py: added base_fixture; starting to refactor
+	tests to use it.
+
+	* src/pydo/base.py (PyDO.joinTable): wasn't testing properly the
+	return value of execute (berlios bug #4297).
+
+	* tests/test_base.py: added tags to everything.
+
+	* src/testingtesting.py (runtests): support for classes as well as
+	functions.  Also, fix for irritating double-logging.
+
+2005-06-15  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/drivers/mysqlconn.py (MysqlDBI.describeTable): same fix
+	here -- exclude unique constraints which contain nullable
+	columns. 
+
+	* src/testingtesting.py: logging tweak.
+
+	* src/pydo/drivers/psycopgconn.py (PsycopgDBI.autocommit): fix
+	implementation for psycopg2 (had it exactly backwards).
+	(PsycopgDBI.describeTable): fix for multi-column unique
+	constraints (was including fields, not field names) and exclude
+	nullable columns from unique constraints.
+
+	* src/pydo/drivers/sqliteconn.py (SqliteDBI.describeTable): coerce
+	nullable to an int, as some pysqlite versions don't return an int
+	for the notnull column in pragma table_info (found by
+	test_base.test_guess_columns1). 
+
+2005-06-14  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/runtests.py, tests/config.py (readCmdLine): now takes an
+	additional option, --pattern.
+
+	* tests/test_base.py (test_project2): proved its worth by finding
+	a projection bug.  
+
+	* src/pydo/base.py (_metapydo.__init__): fix for projection bug: I
+	was storing projections for each class in what I thought was a
+	separate dictionary, but it was actually being inherited from
+	PyDO!  Now each class gets its very own.
+	(_restrict): now more tolerant of whether fields are field
+	instances or just strings.
+
+2005-06-13  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document autoschema.
+
+	* src/pydo/base.py (autoschema): function that creates barebones
+	PyDO objects for all tables in a schema (for quick scripts).
+
+	* src/pydo/drivers/psycopgconn.py (PsycopgDBI.autocommit): for
+	psycopg2, implement autocommit in terms of isolation_level and
+	set_isolation_level. 
+
+2005-06-12  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/test_dbi.py: first actual tests in the new series.
+
+	* tests/README.tests: some rudimentary instructions.
+
+	* tests/pydotestrc.sample: adding sample rc file for tests.
+
+	* tests: moved old tests to a subdirectory, and added stubs for new 
+	tests. 
+
+2005-06-10  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document adding username to default cachedir.
+
+	* src/pydo/guesscache.py (GuessCache.__init__): cachedir now
+	contains username if available.
+
+	* src/pydo/utils.py (getuser): function to get current username
+	that tries win32api if getpass.getuser fails.
+
+2005-06-10  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: documenting sequence treatment.
+
+	* src/pydo/drivers/oracleconn.py (OracleDBI.getSequence):
+	signature change (useless for oracle).
+
+	* src/pydo/base.py (PyDO._new): call to getSequence uses new signature.
+
+	* src/pydo/dbi.py (DBIBase.getSequence): signature change to
+	accomodate sequence name guessing.
+
+	* src/pydo/drivers/psycopgconn.py (PsycopgDBI.getSequence): infer
+	postgresql sequence names when not specified (suggestion by Adam Ward).
+
+2005-06-08  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/testingtesting.py: pass in namePat from commandline.
+
+	* cutting 2.Oa3 release.
+
+	* doc/api/epydoc: fix for building api docs.
+	
+	* tests/README.tests: adding apologetic little note about the sad
+	state of the tests.
+
+	* doc/manual.rst: mentioning the removal of arrayfetch and joins.
+
+	* src/pydo/base.py: removing arrayfetch.
+	
+	* src/pydo/joins.py: removing this module completely.
+
+2005-06-06  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* tests/runtests.py, tests/config.py: skeleton of test framework.  
+
+2005-06-05  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/testingtesting.py: now selects on basis of tag.
+
+	* doc/api/epydoc (dependencies): put fake modules in sys.modules
+	so that dbapi drivers don't need to be present to build the api
+	docs. 
+
+	* src/pydo/base.py (_metapydo.__init__): allow cls.guesscache to
+	be declared as a string, which is turned into the cachedir
+	parameter of a default GuessCache.
+
+	* doc/api/Makefile (EPYDOC): call new wrapper script.
+
+	* doc/api/epydoc: wrapper script for epydoc with somewhat
+	unfortunate hack (__all__ in __init__.py confuses epydoc, so I
+	delete it first).
+
+2005-06-05  Hamish Lawson  <hbl@st-andrews.ac.uk>
+
+	* src/pydo/drivers/oracleconn.py: Removed redundant passing of 
+	cursor description to OracleResultSet and renamed 'resultset' 
+	parameter to 'cursor'.
+
+2005-06-04  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/drivers/oracleconn.py, src/pydo/dbi.py (_driverConfig):
+	adding oracle driver (contributed by Hamish Lawson).
+
+	* src/testingtesting.py: an extremely barebones testing framework.
+	(annotate): adding decorator for tagging tests.
+	(_testsForNamespace): rough draft of filtering by tag.
+
+2005-06-01  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/drivers/mssqlconn.py (MssqlDBI.listTables),
+	src/pydo/drivers/sqliteconn.py (SqliteDBI.listTables): for
+	consistency, return list sorted as the other drivers do.
+
+	* doc/manual.rst: documenting guesscache.
+
+	* src/pydo/__init__.py: import from guesscache.py.
+
+	* src/pydo/guesscache.py: adding a cache for storing table
+	introspection data.
+
+	* src/pydo/base.py (PyDO): added guesscache attribute, and 
+	processing with it in _getTableDescription.
+
+	* doc/manual.rst: document change to signature of project().
+
+	* src/pydo/__init__.py: use getall to make the package's __all__
+	nicer. 
+
+	* src/pydo/utils.py (getall): function for coalescing __all__ of
+	submodules into the package namespace's __all__.
+
+2005-05-31  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/base.py (PyDO.project): change to signature: take
+	fields as positional parameters rather than a tuple (saves typing
+	and is easier for tuples of length one).
+
+	* src/pydo/multifetch.py (iterfetch): correction to docstring.
+
+	* src/pydo/base.py (PyDO._joinTableSQL, PyDO.updateSome)
+	(PyDO._uniqueWhere, PyDO._processWhere, PyDO.joinTable):
+	more refactoring to get bind variable conversion to work correctly
+	with paramstyles that keep bind variables in dictionaries and
+	generate interpolation keys. 
+
+2005-05-31  Tim Golden  <mail@timgolden.me.uk>
+
+        * src/pydo/drivers/mssqlconn.py: more precise handling of
+        identity / sequence detection (only consider something as
+        a sequence if it is not null, an identity and a primary key).
+        Also correct a typo which had the wrong sql executed when
+        looking for unique constraints.
+
+2005-05-31  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/pydo/base.py (PyDO._update_raw): *partial* fix for bug found
+	by Hamish Lawson -- the accumulation of bind variables is broken
+	for parastyles that store values in a dictionary.  This fix is for
+	_update_raw, but there more methods to be repaired.
+
+	* doc/manual.rst: document the refinement in null treatment in
+	fetch. 
+
+	* src/pydo/multifetch.py (iterfetch): add a little intelligence
+	about whether to map an object with all null values to None. 
+
+	* src/pydo/base.py (arrayfetch): note in docstring that this
+	function is deprecated.
+
+	* src/pydo/joins.py: note in docstring that this module is
+	deprecated. 
+
+	* src/pydo/operators.py: removed redundancy in docstring.
+
+	* doc/examples/pim.py: changed import here as well.
+
+	* doc/api/Makefile (EPYDOC): change for package name.
+
+	* doc/manual.rst: change package name, and name of fetch
+	function. 
+
+	* src/pydo/multifetch.py: renamed module again, and renamed
+	scatterfetch back to fetch.  src/pydo/__init__.py: changed import
+	from fetch to multifetch.
+
+	* setup.py, tests, src/pydo: renamed package again, from PyDO2 to
+	pydo.  
+
+	* src/pydo/base.py (PyDO._getTableDescription): column guessing
+	now delegates to this classmethod rather than calling the dbi
+	directly; the intention is that this hook can be used for caching
+	the table description.  
+	
+2005-05-30  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/fetch.py: renaming fetch to scatterfetch (fetch
+	conflicts with module name); stopped flattening the resultSpec.
+
+	* doc/manual.rst: documenting scatterfetch.
+
+2005-05-29  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/fetch.py (iterfetch): add the columns to the column
+	list in sorted order, so that if you don't use $COLUMNS you can at
+	least predict what the right order is.
+
+	* src/PyDO2/base.py (PyDO.deleteSome): fix for silly but bad bug
+	reported by Steve Kieu.
+
+	* src/PyDO2/fetch.py (fetch): remove iterfetch from __all__, and
+	add great big docstring.
+
+	* src/PyDO2/base.py: removing arrayfetch from __all__.
+
+	* src/PyDO2/__init__.py: importing from fetch.py, and no longer
+	importing from joins.py.  Also, increased version number to alpha
+	3. 
+
+	* src/PyDO2/{base,utils}.py: removing redundant util function. 
+
+	* src/PyDO2/fetch.py: first cut at sql template
+	method.
+
+	* src/PyDO2/drivers/{psycopgconn,sqliteconn,mssqlconn}.py, 
+	src/PyDO2/{base,dbi}.py: change all  str tests to basestring.
+
+2005-05-27  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* README: adding mention of the mssql driver.
+
+	* src/PyDO2/operators.py (CONSTANT.__init__): converting
+	is-a-string tests to is-a-basestring (again, thanks to Tim
+	Golden).
+
+	* src/PyDO2/drivers/mssqlconn.py: Tim Golden's mssql driver.
+
+	* src/PyDO2/dbi.py (_driverConfig): adding mssql driver (patch
+	from Tim Golden).
+
+2005-05-26  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/drivers/sqliteconn.py (SqliteDBI.describeTable): patch
+	by Tim Golden: sqlite permits sequences to be defined as nullable,
+	so don't test the nullable bit.  Also, better test for pk column
+	(driver returns int in some versions, string in others).
+
+	* src/PyDO2/base.py (PyDO._uniqueWhere): fix for bug found by Tim
+	Golden (attempt to index a set).
+
+	* src/PyDO2/base.py (_metapydo.__init__): fix for how _unique is
+	built.  Uniqueness constraints created with the Unique class were
+	being added improperly (a string -- the field name -- was being
+	put in _unique, rather than a frozenset with one element).  
+
+2005-05-25  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document arrayfetch changes.
+
+	* src/PyDO2/base.py (arrayfetch): now supports table aliases, and
+	has improved signature (takes getSome()-like arguments).
+
+	* doc/manual.rst: document the change to cls.table/getTable(), and
+	changed the _guess_* attribute names.
+
+	* src/PyDO2/base.py (_metapydo.__init__): now guess table name in
+	the metaclass rather than in getTable(), so cls.table now returns
+	the real table name.
+	(PyDO): rename _guess_tablename and _guess_columns, removing the
+	leading underscores.
+
+2005-05-24  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/drivers/sqliteconn.py (SqliteDBI.describeTable):
+	implementation added for sqlite introspection.
+
+	* src/PyDO2/base.py (_metapydo.__init__): thinko fix: was
+	discarding the values of the dictionary passed and only using the
+	keys. 
+
+2005-05-24  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: documenting _guess_columns.
+
+2005-05-24  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/drivers/mysqlconn.py: adding implementations of
+	listTables and describeTable.  
+
+	* src/PyDO2/base.py (_metapydo.__init__): implementation of field
+	guessing ('_guess_columns') that works with projections.
+
+2005-05-23  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/dbi.py (DBIBase.describeTable): adding schema parameter.
+
+2005-05-23  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/drivers/psycopgconn.py (PsycopgDBI.describeTable):
+	made schema-aware, and raises a ValueError if there is no such
+	table. 
+	(PsycopgDBI.listTables): added implementation.
+
+2005-05-19  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/log.py (logger): another Jonathan Ellis patch: adding
+	default handler to logger.
+
+	* src/PyDO2/drivers/psycopgconn.py (PsycopgDBI.describeTable):
+	from patch by Jonathan Ellis, implementation of describeTable().
+
+	* src/PyDO2/dbi.py (DBIBase.describeTable): docstring patch
+	from Jonathan Ellis (lightly edited) documenting his change to the
+	return value of this function.
+
+2005-05-12  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/__init__.py (__version__): upping to 2.0a2.
+
+2005-05-12  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/base.py (PyDO.project): projections with schemas were
+	broken (the schema got added twice).  Fixed.
+	(PyDO.getTable): now takes a withSchema parameter, defaulting to
+	True (useful for projection fix).
+
+2005-05-11  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document PyDO._create_field.
+
+	* src/PyDO2/base.py (PyDO.newfetch, PyDO.newnofetch): brown bag
+	typo fix: was missing @classmethod for these two methods, which
+	hence did not work.
+	(PyDO._create_field): now delegate Field instance creation in the
+	metaclass to a static method in PyDO.
+
+2005-05-10  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/examples/pim.py: removed refetchs and table attributes,
+	added a couple of comments.
+	
+2005-05-10  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* setup.py (classifiers): little improvements to setup.py.
+
+2005-05-09  Jacob Smullyan <smulloni@smullyan.org>
+	* cut release PyDO-2.0a1.
+
+2005-05-06  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO2/base.py (PyDO._joinTableSQL): fixed to use getTable().
+	(PyDO): now support schema name in a separate schema attribute,
+	and permit table name to be guessed from class name if
+	_guess_tablename is True (as it is by default).
+	(PyDO.new): moved the implementation of new to a new method, _new,
+	which moves fieldData from kwargs to a dictionary.  The only
+	reason to do this is that someone might have a column called
+	'refetch'. (PyDO.project): fix to pass the table name to
+	projections, in case the table attribute doesn't contain it.
+
+	* src/PyDO2/__init__.py (__version__): bumped version to alpha 1.
+
+	* doc/manual.rst: now mentions "newfetch" and auto-guessing.
+	* src/PyDO2/base.py: adding new method, "newfetch" (equivalent to
+	calling new() with refetch=1) and "newnofetch".  Also, fixes some
+	bugs with getUnique(). 
+
+2005-05-05  Jacob Smullyan  <smulloni@smullyan.org>	
+	 
+	* (many files): renamed package from PyDO to PyDO2.
+
+2005-04-08  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: an example used "!=%s" with a bind variable of
+	None; but that is bad sql ("!=NULL" rather than "IS NOT NULL").
+	So I changed None to an empty string.
+
+2005-03-21  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: fixed inaccuracy in describing what input
+	getUnique() tolerates.
+
+	* src/PyDO/drivers/mysqlconn.py: adding stub implementation of
+	typewrapper conversion for mysql, pending testing.
+
+2005-03-20  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO/base.py (__all__): adding arrayfetch.
+
+2005-03-20  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* doc/manual.rst: document the Join classes and arrayfetch.
+
+2005-03-19  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO/joins.py: curried the Join class with a slew of subclasses. 
+
+2005-03-19  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO/joins.py (Join.getSome): reimplemented a bit.  Still
+	doesn't work with nested joins or self-joins.
+
+2005-03-18  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO/joins.py: starting work on module that does various
+	types of joins.  Doesn't work yet.
+
+2005-03-17  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO/utils.py: moved some utility functions to a separate
+	module. 
+
+	* src/PyDO/base.py (PyDO.getColumns): change to behavior, and
+	method signature (optional parameter is now "qualifier", not
+	"qualified").  If qualifier is a string, it will be used as the
+	table alias; if it isn't and is true, the full table name will be
+	used. 
+
+2005-03-16  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO/base.py (_metapydo.__init__): removed unnecessary
+	dict() around generator expression passed to update().
+	(PyDO.joinTable): now it is possible to add to the where clause, a
+	la getSome(), including order, limit, and offset, and add extra
+	tables to the select as well.
+	(arrayfetch): put in None rather than a PyDO object when all the
+	columns are null for an object.  This method, however, is probably
+	going bye-bye, to be replaced by a happy little family of Join
+	objects. 
+
+2005-03-15  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO/base.py (_setize): removed spurious variable
+	assignments (left in by mistake).
+
+2005-03-15  Jacob Smullyan  <smulloni@smullyan.org>
+
+	* src/PyDO/__init__.py (__version__): cutting first alpha release (2.0a0).
+

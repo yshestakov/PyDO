@@ -1,0 +1,34 @@
+#! /usr/bin/env python
+#
+# Call the command line interface for Epydoc,
+# with hacks for PyDO 
+
+# by excluding the submodules, this was making epydoc consider them
+# all private, so I'm deleting __all__
+import pydo
+del pydo.__all__
+
+# put fake modules into sys.modules, if necessary
+import sys
+
+dependencies=['cx_Oracle',
+              'adodbapi',
+              'sqlite',
+              'MySQLdb',
+              'psycopg']
+
+class fakemod(object):
+    def __init__(self, name):
+        self.__name__=name
+
+for m in dependencies:
+    try:
+        __import__(m)
+    except ImportError:
+        sys.modules[m]=fakemod(m)
+
+        
+# run epydoc
+from epydoc.cli import cli
+cli()
+

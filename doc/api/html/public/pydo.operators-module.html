@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pydo.operators</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="pydo-module.html">Package&nbsp;pydo</a> ::
+        Module&nbsp;operators
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/pydo.operators-module.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="pydo.operators-module.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF MODULE DESCRIPTION =========== -->
+<h2 class="module">Module pydo.operators</h2>
+
+This module permits a useful subset of SQL where clauses to be defined 
+with a Lispo-Pythonic syntax:
+<pre class="doctestblock">
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>g=SQLOperator((<span class="py-string">'AND'</span>, (<span class="py-string">'LIKE'</span>, FIELD(<span class="py-string">'username'</span>), <span class="py-string">'bilbo_bag%'</span>),
+<span class="py-prompt">... </span>                      (<span class="py-string">'&gt;'</span>, FIELD(<span class="py-string">'x'</span>), 40)))
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> g</span>
+<span class="py-output">((username LIKE 'bilbo_bag%') AND (x &gt; 40))</span></pre>
+<p>SQLOperator is a tuple subclass that represents itself as a SQL 
+string. The first element of the tuple is the SQL operator, and the 
+remaining elements are arguments, which may be atoms or nested tuples, 
+which are recursively converted to SQLOperator tuples.</p>
+FIELD is a synonym for CONSTANT, a helper class which distinguishes 
+field names (and names of constants, like NULL) from plain strings, which 
+will appear in the SQL output as string literals. NULL in particular is 
+available as a constant, due to the understandable popularity of nullity; 
+it is equal to CONSTANT('NULL'). Another helper class, SET, is available 
+to help use the IN operator:
+<pre class="doctestblock">
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> SQLOperator((<span class="py-string">'IN'</span>, FIELD(<span class="py-string">'x'</span>), SET(1, 2, 3, 4)))</span>
+<span class="py-output">(x IN (1, 2, 3, 4))</span></pre>
+For convenience, most SQL operators are additionally wrapped in 
+operator-specific SQLOperator subclasses, which are exactly equivalent to 
+the explicit tuple notation.
+<pre class="doctestblock">
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> IN(FIELD(<span class="py-string">'x'</span>), SET(1, 2, 3, 4))</span>
+<span class="py-output">(x IN (1, 2, 3, 4))</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> AND(OR(EQ(FIELD(<span class="py-string">'x'</span>),
+<span class="py-prompt">... </span>                FIELD(<span class="py-string">'y'</span>)),
+<span class="py-prompt">... </span>             LT_EQ(FIELD(<span class="py-string">'a'</span>),
+<span class="py-prompt">... </span>                   MULT(FIELD(<span class="py-string">'b'</span>),
+<span class="py-prompt">... </span>                        EXP(FIELD(<span class="py-string">'c'</span>), 2)))),
+<span class="py-prompt">... </span>          IN(FIELD(<span class="py-string">'e'</span>), SET(<span class="py-string">'Porthos'</span>, <span class="py-string">'Athos'</span>, <span class="py-string">'Aramis'</span>)))</span>
+<span class="py-output">(((x = y) OR (a &lt;= (b * (c ^ 2)))) AND (e IN ('Porthos', 'Athos', 'Aramis')))</span></pre>
+<p>SQLOperators can also take a conversion function that format data 
+values: SQLOperator(('EQ', FIELD('datecolumn'), myDate), 
+converter=myFunc). Nested operators will inherit the conversion function 
+from the enclosing operator class if they don't define one 
+themselves.</p>
+The BindingConverter manages bind variables by inserting the 
+appropriate formats and accumulating the values inside the converter.
+<pre class="doctestblock">
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c=BindingConverter(<span class="py-string">'format'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span>op=AND(OR(EQ(FIELD(<span class="py-string">'x'</span>),
+<span class="py-prompt">... </span>             FIELD(<span class="py-string">'y'</span>)),
+<span class="py-prompt">... </span>          LT_EQ(FIELD(<span class="py-string">'a'</span>),
+<span class="py-prompt">... </span>                MULT(FIELD(<span class="py-string">'b'</span>),
+<span class="py-prompt">... </span>                     EXP(FIELD(<span class="py-string">'c'</span>), 2)))),
+<span class="py-prompt">... </span>       IN(FIELD(<span class="py-string">'e'</span>), SET(<span class="py-string">'Porthos'</span>, <span class="py-string">'Athos'</span>, <span class="py-string">'Aramis'</span>)), converter=c)
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> op</span>
+<span class="py-output">(((x = y) OR (a &lt;= (b * (c ^ %s)))) AND (e IN (%s, %s, %s)))</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.values</span>
+<span class="py-output">[2, 'Porthos', 'Athos', 'Aramis']</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.paramstyle=<span class="py-string">'pyformat'</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>c.reset()
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> op</span>
+<span class="py-output">(((x = y) OR (a &lt;= (b * (c ^ %(n1)s)))) AND (e IN (%(n2)s, %(n3)s, %(n4)s)))</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.values</span>
+<span class="py-output">{'n1': 2, 'n2': 'Porthos', 'n3': 'Athos', 'n4': 'Aramis'}</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.paramstyle=<span class="py-string">'numeric'</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>c.reset()
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> op</span>
+<span class="py-output">(((x = y) OR (a &lt;= (b * (c ^ :1)))) AND (e IN (:2, :3, :4)))</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.values</span>
+<span class="py-output">[2, 'Porthos', 'Athos', 'Aramis']</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.paramstyle=<span class="py-string">'qmark'</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>c.reset()
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> op</span>
+<span class="py-output">(((x = y) OR (a &lt;= (b * (c ^ ?)))) AND (e IN (?, ?, ?)))</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.values</span>
+<span class="py-output">[2, 'Porthos', 'Athos', 'Aramis']</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.paramstyle=<span class="py-string">'named'</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>c.reset()
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> op</span>
+<span class="py-output">(((x = y) OR (a &lt;= (b * (c ^ :n1)))) AND (e IN (:n2, :n3, :n4)))</span>
+
+<span class="py-src"><span class="py-prompt">&gt;&gt;&gt; </span>c.values</span>
+<span class="py-output">{'n1': 2, 'n2': 'Porthos', 'n3': 'Athos', 'n4': 'Aramis'}</span></pre>
+<hr/>
+
+<!-- =========== START OF CLASSES =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Classes</th></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.AND-class.html"><code>AND</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.BETWEEN-class.html"><code>BETWEEN</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.BindingConverter-class.html"><code>BindingConverter</code></a></b></td>
+  <td>A value converter that uses bind variables.</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.CONSTANT-class.html"><code>CONSTANT</code></a></b></td>
+  <td>a way to represent a constant or field name in a sql expression</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.DIV-class.html"><code>DIV</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.EQ-class.html"><code>EQ</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.EXP-class.html"><code>EXP</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.CONSTANT-class.html"><code>FIELD</code></a></b></td>
+  <td>a way to represent a constant or field name in a sql expression</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.GT-class.html"><code>GT</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.GT_EQ-class.html"><code>GT_EQ</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.ILIKE-class.html"><code>ILIKE</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.IN-class.html"><code>IN</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.IREGEX-class.html"><code>IREGEX</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.IS-class.html"><code>IS</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.ISNULL-class.html"><code>ISNULL</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.LIKE-class.html"><code>LIKE</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.LT-class.html"><code>LT</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.LT_EQ-class.html"><code>LT_EQ</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.MINUS-class.html"><code>MINUS</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.MOD-class.html"><code>MOD</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.MULT-class.html"><code>MULT</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.NE-class.html"><code>NE</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.NOT-class.html"><code>NOT</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.NOTNULL-class.html"><code>NOTNULL</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.OR-class.html"><code>OR</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.OVERLAPS-class.html"><code>OVERLAPS</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.PLUS-class.html"><code>PLUS</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.REGEX-class.html"><code>REGEX</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.SET-class.html"><code>SET</code></a></b></td>
+  <td>a way of passing a set into PyDO where clauses (for IN), e.g.:</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.SIMILAR-class.html"><code>SIMILAR</code></a></b></td>
+  <td>&nbsp;</td></tr>
+<tr><td width="15%">
+  <b><a href="pydo.operators.SQLOperator-class.html"><code>SQLOperator</code></a></b></td>
+  <td>A special kind of tuple that knows how to represent itself as a SQL 
+string.</td></tr>
+</table><br />
+
+
+<!-- =========== START OF VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>CONSTANT</code></font></td>
+<td><b><a href="pydo.operators-module.html#NULL"><code>NULL</code></a></b> = <span title="NULL"><code>NULL                                              </code>
+</span></td></tr>
+</table><br />
+
+
+<!-- =========== START OF VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="NULL"></a>
+<h3>NULL</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>CONSTANT</code>
+
+      </dd>
+<span title="NULL">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+NULL                                                                   </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.0 on Thu Feb 15 13:21:49 2007</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

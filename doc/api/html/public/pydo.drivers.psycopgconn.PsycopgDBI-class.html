@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pydo.drivers.psycopgconn.PsycopgDBI</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="pydo-module.html">Package&nbsp;pydo</a> ::
+        <a href="pydo.drivers-module.html">Package&nbsp;drivers</a> ::
+        <a href="pydo.drivers.psycopgconn-module.html">Module&nbsp;psycopgconn</a> ::
+        Class&nbsp;PsycopgDBI
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/pydo.drivers.psycopgconn.PsycopgDBI-class.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="pydo.drivers.psycopgconn.PsycopgDBI-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Class PsycopgDBI</h2>
+
+<pre class="base-tree">
+<a href="__builtin__.object-class.html"><code>object</code></a> --+    
+         |    
+   <a href="../private/pydo.dbi.DBIBase-class.html"><code>DBIBase</code></a> --+
+             |
+            <b>PsycopgDBI</b>
+</pre><br />
+
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__init__"></a><span class="summary-sig"><span class="summary-sig-name">__init__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>connectArgs</span>,
+          <span class=summary-sig-arg>pool</span>,
+          <span class=summary-sig-arg>verbose</span>,
+          <span class=summary-sig-arg>initFunc</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.drivers.psycopgconn.PsycopgDBI-class.html#describeTable" class="summary-sig-name"><code>describeTable</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>table</span>,
+          <span class=summary-sig-arg>schema</span>)</span></code>
+<br />
+for the given table, returns a 2-tuple: a dict of Field objects keyed 
+by name, and list of multi-column unique constraints (sets of 
+Fields)).</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.drivers.psycopgconn.PsycopgDBI-class.html#execute" class="summary-sig-name"><code>execute</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>sql</span>,
+          <span class=summary-sig-arg>values</span>,
+          <span class=summary-sig-arg>qualified</span>)</span></code>
+<br />
+Executes the statement with the values and does conversion of the 
+return result as necessary.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.drivers.psycopgconn.PsycopgDBI-class.html#getConverter" class="summary-sig-name"><code>getConverter</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+returns a converter instance.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.drivers.psycopgconn.PsycopgDBI-class.html#getSequence" class="summary-sig-name"><code>getSequence</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>name</span>,
+          <span class=summary-sig-arg>field</span>,
+          <span class=summary-sig-arg>table</span>)</span></code>
+<br />
+If db has sequences, this should return the next value of the sequence 
+named 'name'</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.drivers.psycopgconn.PsycopgDBI-class.html#listTables" class="summary-sig-name"><code>listTables</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>schema</span>)</span></code>
+<br />
+lists the tables in the database schema</td></tr>
+<tr bgcolor="#e8f0f8" class="group">
+  <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Inherited from object</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__delattr__" class="summary-sig-name"><code>__delattr__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__delattr__('name') &lt;==&gt; del x.name</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__getattribute__" class="summary-sig-name"><code>__getattribute__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__getattribute__('name') &lt;==&gt; x.name</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__hash__" class="summary-sig-name"><code>__hash__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__hash__() &lt;==&gt; hash(x)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__reduce__" class="summary-sig-name"><code>__reduce__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+helper for pickle</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__reduce_ex__" class="summary-sig-name"><code>__reduce_ex__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+helper for pickle</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__repr__" class="summary-sig-name"><code>__repr__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__repr__() &lt;==&gt; repr(x)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__setattr__" class="summary-sig-name"><code>__setattr__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__setattr__('name', value) &lt;==&gt; x.name = value</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__str__" class="summary-sig-name"><code>__str__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__str__() &lt;==&gt; str(x)</td></tr>
+<tr bgcolor="#e8f0f8" class="group">
+  <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Inherited from type</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.type-class.html#__new__" class="summary-sig-name"><code>__new__</code></a>(<span class=summary-sig-arg>T</span>,
+          <span class=summary-sig-arg>S</span>,
+          <span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+T.__new__(S, ...) -&gt; a new object with type S, a subtype of T</td></tr>
+</table><br />
+
+
+<!-- =========== START OF PROPERTY SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Property Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><b><a href="pydo.drivers.psycopgconn.PsycopgDBI-class.html#autocommit"><code>autocommit</code></a></b></td></tr></table><br />
+
+
+<!-- =========== START OF INSTANCE METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Instance Method Details</th></tr>
+</table>
+
+<a name="describeTable"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">describeTable</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>table</span>,
+          <span class=sig-arg>schema</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  for the given table, returns a 2-tuple: a dict of Field objects 
+  keyed by name, and list of multi-column unique constraints (sets of 
+  Fields)). The Field instances should contain information about whether 
+  they are unique or sequenced.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="../private/pydo.dbi.DBIBase-class.html#describeTable"><code>pydo.dbi.DBIBase.describeTable</code></a> <i>(inherited documentation)</i>
+</dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="execute"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">execute</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>sql</span>,
+          <span class=sig-arg>values</span>=<span class=sig-default>()</span>,
+          <span class=sig-arg>qualified</span>=<span class=sig-default>False</span>)</span>
+  </h3>
+  Executes the statement with the values and does conversion of the 
+  return result as necessary. result is list of dictionaries, or number 
+  of rows affected
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="../private/pydo.dbi.DBIBase-class.html#execute"><code>pydo.dbi.DBIBase.execute</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getConverter"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getConverter</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  returns a converter instance.
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="../private/pydo.dbi.DBIBase-class.html#getConverter"><code>pydo.dbi.DBIBase.getConverter</code></a> <i>(inherited documentation)</i>
+</dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getSequence"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getSequence</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>name</span>,
+          <span class=sig-arg>field</span>,
+          <span class=sig-arg>table</span>)</span>
+  </h3>
+  If db has sequences, this should return the next value of the 
+  sequence named 'name'
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="../private/pydo.dbi.DBIBase-class.html#getSequence"><code>pydo.dbi.DBIBase.getSequence</code></a> <i>(inherited documentation)</i>
+</dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="listTables"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">listTables</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>schema</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  lists the tables in the database schema
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="../private/pydo.dbi.DBIBase-class.html#listTables"><code>pydo.dbi.DBIBase.listTables</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF PROPERTY DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Property Details</th></tr>
+</table>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+
+<a name="autocommit"></a>
+<h3>autocommit</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Get Method:</b></dt>
+      <dd><span class="summary-sig"><span class="summary-sig-name">fget</span>(...)</span>
+      </dd>
+      <dt><b>Set Method:</b></dt>
+      <dd><span class="summary-sig"><span class="summary-sig-name">fset</span>(...)</span>
+      </dd>
+    </dl>
+  </dd>
+</dl></td></tr></table><br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.0 on Thu Feb 15 13:21:44 2007</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pydo.base.PyDO</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css"></link>
+</head>
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <font size="-1"><b class="breadcrumbs">
+        <a href="pydo-module.html">Package&nbsp;pydo</a> ::
+        <a href="pydo.base-module.html">Module&nbsp;base</a> ::
+        Class&nbsp;PyDO
+      </b></font></br>
+    </td>
+    <td><table cellpadding="0" cellspacing="0">
+      <tr><td align="right"><font size="-2">[<a href="../private/pydo.base.PyDO-class.html">show&nbsp;private</a>&nbsp;|&nbsp;hide&nbsp;private]</font></td></tr>
+      <tr><td align="right"><font size="-2">[<a href="frames.html"target="_top">frames</a>&nbsp;|&nbsp;<a href="pydo.base.PyDO-class.html" target="_top">no&nbsp;frames</a>]</font></td></tr>
+    </table></td>
+</tr></table>
+
+<!-- =========== START OF CLASS DESCRIPTION =========== -->
+<h2 class="class">Class PyDO</h2>
+
+<pre class="base-tree">
+<a href="__builtin__.object-class.html"><code>object</code></a> --+    
+         |    
+      <a href="__builtin__.dict-class.html"><code>dict</code></a> --+
+             |
+            <b>PyDO</b>
+</pre><br />
+
+<hr/>
+
+Base class for PyDO data classes.
+<hr/>
+
+
+<!-- =========== START OF METHOD SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Method Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="__setitem__"></a><span class="summary-sig"><span class="summary-sig-name">__setitem__</span>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>k</span>,
+          <span class=summary-sig-arg>v</span>)</span></code>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#clear" class="summary-sig-name"><code>clear</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+not implemented for PyDO classes</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#commit" class="summary-sig-name"><code>commit</code></a>(<span class=summary-sig-arg>cls</span>)</span></code>
+<br />
+Commit changes to database    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#copy" class="summary-sig-name"><code>copy</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+returns a copy of self</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#delete" class="summary-sig-name"><code>delete</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+remove the row that represents me in the database</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#deleteSome" class="summary-sig-name"><code>deleteSome</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class="summary-sig-vararg">*args</span>,
+          <span class="summary-sig-kwarg">**fieldData</span>)</span></code>
+<br />
+delete possibly many records at once, and return the number 
+deleted    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#dict" class="summary-sig-name"><code>dict</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+returns a copy of self as a plain dict</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getColumns" class="summary-sig-name"><code>getColumns</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class=summary-sig-arg>qualifier</span>)</span></code>
+<br />
+Returns a list of all columns in this table, in no particular 
+order.    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getCount" class="summary-sig-name"><code>getCount</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class="summary-sig-vararg">*args</span>,
+          <span class="summary-sig-kwarg">**fieldData</span>)</span></code>
+<br />
+Retrieve the number of object of this particular class, optionally 
+limited by query arguments.    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getDBI" class="summary-sig-name"><code>getDBI</code></a>(<span class=summary-sig-arg>cls</span>)</span></code>
+<br />
+return the database interface    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getFields" class="summary-sig-name"><code>getFields</code></a>(<span class=summary-sig-arg>cls</span>)</span></code>
+<br />
+returns the effective fields of the class    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getSequences" class="summary-sig-name"><code>getSequences</code></a>(<span class=summary-sig-arg>cls</span>)</span></code>
+<br />
+returns the effective sequences for the class    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getSome" class="summary-sig-name"><code>getSome</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class="summary-sig-vararg">*args</span>,
+          <span class="summary-sig-kwarg">**fieldData</span>)</span></code>
+<br />
+Retrieve some objects of this particular class.    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getTable" class="summary-sig-name"><code>getTable</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class=summary-sig-arg>withSchema</span>)</span></code>
+<br />
+returns the name of the table, qualified with the schema, if any, if 
+withSchema is true.    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getUnique" class="summary-sig-name"><code>getUnique</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class="summary-sig-kwarg">**fieldData</span>)</span></code>
+<br />
+Retrieve one particular instance of this class.    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#getUniquenessConstraints" class="summary-sig-name"><code>getUniquenessConstraints</code></a>(<span class=summary-sig-arg>cls</span>)</span></code>
+<br />
+returns the effective uniqueness constraints of the class    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#joinTable" class="summary-sig-name"><code>joinTable</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>thisAttrNames</span>,
+          <span class=summary-sig-arg>pivotTable</span>,
+          <span class=summary-sig-arg>thisSideColumns</span>,
+          <span class=summary-sig-arg>thatSideColumns</span>,
+          <span class=summary-sig-arg>thatObject</span>,
+          <span class=summary-sig-arg>thatAttrNames</span>,
+          <span class="summary-sig-vararg">*whereArgs</span>,
+          <span class="summary-sig-kwarg">**extra</span>)</span></code>
+<br />
+Handles many to many relations.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#new" class="summary-sig-name"><code>new</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class="summary-sig-kwarg">**fieldData</span>)</span></code>
+<br />
+create and return a new data class instance using the values in 
+fieldData.    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#newfetch" class="summary-sig-name"><code>newfetch</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class="summary-sig-kwarg">**fieldData</span>)</span></code>
+<br />
+like new(), but always refetches.    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#newnofetch" class="summary-sig-name"><code>newnofetch</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class="summary-sig-kwarg">**fieldData</span>)</span></code>
+<br />
+like new(), but never refetches.    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#onUpdate" class="summary-sig-name"><code>onUpdate</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>adict</span>)</span></code>
+<br />
+a hook for subclasses to modify/validate updates; by default returns 
+the original data unchanged.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#pop" class="summary-sig-name"><code>pop</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+not implemented for PyDO classes</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#popitem" class="summary-sig-name"><code>popitem</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+not implemented for PyDO classes</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><a name="project"></a><span class="summary-sig"><span class="summary-sig-name">project</span>(<span class=summary-sig-arg>cls</span>,
+          <span class="summary-sig-vararg">*fields</span>,
+          <span class="summary-sig-kwarg">**kwargs</span>)</span></code>
+<br />
+    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#refresh" class="summary-sig-name"><code>refresh</code></a>(<span class=summary-sig-arg>self</span>)</span></code>
+<br />
+refetch myself from the database</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#rollback" class="summary-sig-name"><code>rollback</code></a>(<span class=summary-sig-arg>cls</span>)</span></code>
+<br />
+Rollback current transaction    <i>(Class method)</i>
+</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#setdefault" class="summary-sig-name"><code>setdefault</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>key</span>,
+          <span class=summary-sig-arg>val</span>)</span></code>
+<br />
+not implemented for PyDO classes</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#update" class="summary-sig-name"><code>update</code></a>(<span class=summary-sig-arg>self</span>,
+          <span class=summary-sig-arg>adict</span>)</span></code>
+<br />
+Part of dictionary interface for field access</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="pydo.base.PyDO-class.html#updateSome" class="summary-sig-name"><code>updateSome</code></a>(<span class=summary-sig-arg>cls</span>,
+          <span class=summary-sig-arg>adict</span>,
+          <span class="summary-sig-vararg">*args</span>,
+          <span class="summary-sig-kwarg">**fieldData</span>)</span></code>
+<br />
+update possibly many records at once, and return the number 
+updated    <i>(Class method)</i>
+</td></tr>
+<tr bgcolor="#e8f0f8" class="group">
+  <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Inherited from dict</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__init__" class="summary-sig-name"><code>__init__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__init__(...) initializes x; see x.__class__.__doc__ for 
+signature</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__cmp__" class="summary-sig-name"><code>__cmp__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__cmp__(y) &lt;==&gt; cmp(x,y)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__contains__" class="summary-sig-name"><code>__contains__</code></a>(<span class=summary-sig-arg>D</span>,
+          <span class=summary-sig-arg>k</span>)</span></code>
+<br />
+D.__contains__(k) -&gt; True if D has a key k, else False</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__delitem__" class="summary-sig-name"><code>__delitem__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__delitem__(y) &lt;==&gt; del x[y]</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__eq__" class="summary-sig-name"><code>__eq__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__eq__(y) &lt;==&gt; x==y</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__ge__" class="summary-sig-name"><code>__ge__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__ge__(y) &lt;==&gt; x&gt;=y</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__getattribute__" class="summary-sig-name"><code>__getattribute__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__getattribute__('name') &lt;==&gt; x.name</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__getitem__" class="summary-sig-name"><code>__getitem__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__getitem__(y) &lt;==&gt; x[y]</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__gt__" class="summary-sig-name"><code>__gt__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__gt__(y) &lt;==&gt; x&gt;y</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__hash__" class="summary-sig-name"><code>__hash__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__hash__() &lt;==&gt; hash(x)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__iter__" class="summary-sig-name"><code>__iter__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__iter__() &lt;==&gt; iter(x)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__le__" class="summary-sig-name"><code>__le__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__le__(y) &lt;==&gt; x&lt;=y</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__len__" class="summary-sig-name"><code>__len__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__len__() &lt;==&gt; len(x)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__lt__" class="summary-sig-name"><code>__lt__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__lt__(y) &lt;==&gt; x&lt;y</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__ne__" class="summary-sig-name"><code>__ne__</code></a>(<span class=summary-sig-arg>x</span>,
+          <span class=summary-sig-arg>y</span>)</span></code>
+<br />
+x.__ne__(y) &lt;==&gt; x!=y</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#__repr__" class="summary-sig-name"><code>__repr__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__repr__() &lt;==&gt; repr(x)</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#get" class="summary-sig-name"><code>get</code></a>(<span class=summary-sig-arg>D</span>,
+          <span class=summary-sig-arg>k</span>,
+          <span class=summary-sig-arg>d</span>)</span></code>
+<br />
+D.get(k[,d]) -&gt; D[k] if k in D, else d.</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#has_key" class="summary-sig-name"><code>has_key</code></a>(<span class=summary-sig-arg>D</span>,
+          <span class=summary-sig-arg>k</span>)</span></code>
+<br />
+D.has_key(k) -&gt; True if D has a key k, else False</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#items" class="summary-sig-name"><code>items</code></a>(<span class=summary-sig-arg>D</span>)</span></code>
+<br />
+D.items() -&gt; list of D's (key, value) pairs, as 2-tuples</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#iteritems" class="summary-sig-name"><code>iteritems</code></a>(<span class=summary-sig-arg>D</span>)</span></code>
+<br />
+D.iteritems() -&gt; an iterator over the (key, value) items of D</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#iterkeys" class="summary-sig-name"><code>iterkeys</code></a>(<span class=summary-sig-arg>D</span>)</span></code>
+<br />
+D.iterkeys() -&gt; an iterator over the keys of D</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#itervalues" class="summary-sig-name"><code>itervalues</code></a>(<span class=summary-sig-arg>D</span>)</span></code>
+<br />
+D.itervalues() -&gt; an iterator over the values of D</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#keys" class="summary-sig-name"><code>keys</code></a>(<span class=summary-sig-arg>D</span>)</span></code>
+<br />
+D.keys() -&gt; list of D's keys</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.dict-class.html#values" class="summary-sig-name"><code>values</code></a>(<span class=summary-sig-arg>D</span>)</span></code>
+<br />
+D.values() -&gt; list of D's values</td></tr>
+<tr bgcolor="#e8f0f8" class="group">
+  <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Inherited from object</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__delattr__" class="summary-sig-name"><code>__delattr__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__delattr__('name') &lt;==&gt; del x.name</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__reduce__" class="summary-sig-name"><code>__reduce__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+helper for pickle</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__reduce_ex__" class="summary-sig-name"><code>__reduce_ex__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+helper for pickle</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__setattr__" class="summary-sig-name"><code>__setattr__</code></a>(<span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+x.__setattr__('name', value) &lt;==&gt; x.name = value</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.object-class.html#__str__" class="summary-sig-name"><code>__str__</code></a>(<span class=summary-sig-arg>x</span>)</span></code>
+<br />
+x.__str__() &lt;==&gt; str(x)</td></tr>
+<tr bgcolor="#e8f0f8" class="group">
+  <th colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Inherited from type</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.type-class.html#__new__" class="summary-sig-name"><code>__new__</code></a>(<span class=summary-sig-arg>T</span>,
+          <span class=summary-sig-arg>S</span>,
+          <span class="summary-sig-vararg">...</span>)</span></code>
+<br />
+T.__new__(S, ...) -&gt; a new object with type S, a subtype of T</td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1">&nbsp;</font></td>
+  <td><code><span class="summary-sig"><a href="__builtin__.type-class.html#fromkeys" class="summary-sig-name"><code>fromkeys</code></a>(<span class=summary-sig-arg>dict</span>,
+          <span class=summary-sig-arg>S</span>,
+          <span class=summary-sig-arg>v</span>)</span></code>
+<br />
+v defaults to None.</td></tr>
+</table><br />
+
+
+<!-- =========== START OF CLASS VARIABLE SUMMARY =========== -->
+<table class="summary" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="summary">
+  <th colspan="2">Class Variable Summary</th></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>NoneType</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#connectionAlias"><code>connectionAlias</code></a></b> = <span title="None">None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>bool</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#guess_columns"><code>guess_columns</code></a></b> = <span title="False"><code>False                                    </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>bool</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#guess_tablename"><code>guess_tablename</code></a></b> = <span title="True"><code>True                                   </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>NoneType</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#guesscache"><code>guesscache</code></a></b> = <span title="None">None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>bool</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#mutable"><code>mutable</code></a></b> = <span title="True"><code>True                                           </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>bool</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#refetch"><code>refetch</code></a></b> = <span title="False"><code>False                                          </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>NoneType</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#schema"><code>schema</code></a></b> = <span title="None">None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>NoneType</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#sequence_mapper"><code>sequence_mapper</code></a></b> = <span title="None">None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>str</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#table"><code>table</code></a></b> = <span title="'pydo'"><code><span class="variable-quote">'</span>pydo<span class="variable-quote">'</span>                                           </code>
+</span></td></tr>
+<tr><td align="right" valign="top" width="15%"><font size="-1"><code>bool</code></font></td>
+<td><b><a href="pydo.base.PyDO-class.html#use_attributes"><code>use_attributes</code></a></b> = <span title="True"><code>True                                    </code>
+</span></td></tr>
+</table><br />
+
+
+<!-- =========== START OF INSTANCE METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Instance Method Details</th></tr>
+</table>
+
+<a name="clear"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">clear</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  not implemented for PyDO classes
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.dict-class.html#clear"><code>__builtin__.dict.clear</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="copy"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">copy</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  returns a copy of self
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.dict-class.html#copy"><code>__builtin__.dict.copy</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="delete"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">delete</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  remove the row that represents me in the database
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="dict"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">dict</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  returns a copy of self as a plain dict
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="joinTable"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">joinTable</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>thisAttrNames</span>,
+          <span class=sig-arg>pivotTable</span>,
+          <span class=sig-arg>thisSideColumns</span>,
+          <span class=sig-arg>thatSideColumns</span>,
+          <span class=sig-arg>thatObject</span>,
+          <span class=sig-arg>thatAttrNames</span>,
+          <span class="sig-vararg">*whereArgs</span>,
+          <span class="sig-kwarg">**extra</span>)</span>
+  </h3>
+  <p>Handles many to many relations. In short, do:</p>
+  <p>SELECT thatObject.getColumns(1) FROM thatObject.table, pivotTable 
+  WHERE pivotTable.thisSideColumn = self.myAttrName AND 
+  pivotTable.thatSideColumn = thatObject.table.thatAttrName</p>
+  <p>and return a list of thatObjects representing the resulting rows. 
+  The parameters which accept column names (thisAttrNames, 
+  thisSideColumns, thatSideColumns, thatAttrNames) can be strings 
+  (silently turned to tuples of length 1) or tuples of strings. For each 
+  pair P of the two pairs (thisSideColumns, thisAttrNames) and 
+  (thatSideColumns, thatAttrNames) len(P[0]) must equal len(P[1]).</p>
+  In addition, you can add extra tables and arbitrary sql to the where 
+  clause, as you can with getSome(), including order, limit and offset, 
+  using the &quot;extraTables&quot;, &quot;order&quot;, &quot;limit&quot; 
+  and &quot;offset&quot; keyword arguments, using SQLOperators or 
+  (sql-string, bind values) as positional arguments, and by specifying 
+  columns by keyword argument.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="onUpdate"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">onUpdate</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>adict</span>)</span>
+  </h3>
+  a hook for subclasses to modify/validate updates; by default returns 
+  the original data unchanged.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="pop"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">pop</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  not implemented for PyDO classes
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.dict-class.html#pop"><code>__builtin__.dict.pop</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="popitem"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">popitem</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  not implemented for PyDO classes
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.dict-class.html#popitem"><code>__builtin__.dict.popitem</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="refresh"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">refresh</span>(<span class=sig-arg>self</span>)</span>
+  </h3>
+  refetch myself from the database
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="setdefault"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">setdefault</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>key</span>,
+          <span class=sig-arg>val</span>)</span>
+  </h3>
+  not implemented for PyDO classes
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.dict-class.html#setdefault"><code>__builtin__.dict.setdefault</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+
+<a name="update"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">update</span>(<span class=sig-arg>self</span>,
+          <span class=sig-arg>adict</span>)</span>
+  </h3>
+  Part of dictionary interface for field access
+  <dl><dt></dt><dd>
+    <dl><dt><b>Overrides:</b></dt>
+      <dd><a href="__builtin__.dict-class.html#update"><code>__builtin__.dict.update</code></a></dd>
+    </dl>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS METHOD DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Method Details</th></tr>
+</table>
+
+<a name="commit"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">commit</span>(<span class=sig-arg>cls</span>)</span>
+  </h3>
+  Commit changes to database
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="deleteSome"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">deleteSome</span>(<span class=sig-arg>cls</span>,
+          <span class="sig-vararg">*args</span>,
+          <span class="sig-kwarg">**fieldData</span>)</span>
+  </h3>
+  delete possibly many records at once, and return the number 
+  deleted
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getColumns"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getColumns</span>(<span class=sig-arg>cls</span>,
+          <span class=sig-arg>qualifier</span>=<span class=sig-default>None</span>)</span>
+  </h3>
+  <p>Returns a list of all columns in this table, in no particular 
+  order.</p>
+  If qualifier is true, returns fully qualified column names (i.e., 
+  table.column). If you pass in a string to qualifier, it will be used as 
+  a table alias; otherwise the table name will be used.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getCount"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getCount</span>(<span class=sig-arg>cls</span>,
+          <span class="sig-vararg">*args</span>,
+          <span class="sig-kwarg">**fieldData</span>)</span>
+  </h3>
+  Retrieve the number of object of this particular class, optionally 
+  limited by query arguments.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getDBI"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getDBI</span>(<span class=sig-arg>cls</span>)</span>
+  </h3>
+  return the database interface
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getFields"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getFields</span>(<span class=sig-arg>cls</span>)</span>
+  </h3>
+  returns the effective fields of the class
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getSequences"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getSequences</span>(<span class=sig-arg>cls</span>)</span>
+  </h3>
+  returns the effective sequences for the class
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getSome"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getSome</span>(<span class=sig-arg>cls</span>,
+          <span class="sig-vararg">*args</span>,
+          <span class="sig-kwarg">**fieldData</span>)</span>
+  </h3>
+  <p>Retrieve some objects of this particular class.</p>
+  <p>[todo: examples of use of operators, column-name keyword args, 
+  order, limit, and offset.]</p>
+  If you use SQL directly and pass variables, it is up to you to use 
+  the same paramstyle as the underlying driver.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getTable"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getTable</span>(<span class=sig-arg>cls</span>,
+          <span class=sig-arg>withSchema</span>=<span class=sig-default>True</span>)</span>
+  </h3>
+  returns the name of the table, qualified with the schema, if any, if 
+  withSchema is true.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getUnique"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getUnique</span>(<span class=sig-arg>cls</span>,
+          <span class="sig-kwarg">**fieldData</span>)</span>
+  </h3>
+  <p>Retrieve one particular instance of this class.</p>
+  Given the attribute/value pairs in fieldData, retrieve a unique row 
+  and return a data class instance representing said row or None if no 
+  row was retrieved.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="getUniquenessConstraints"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">getUniquenessConstraints</span>(<span class=sig-arg>cls</span>)</span>
+  </h3>
+  returns the effective uniqueness constraints of the class
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="new"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">new</span>(<span class=sig-arg>cls</span>,
+          <span class="sig-kwarg">**fieldData</span>)</span>
+  </h3>
+  create and return a new data class instance using the values in 
+  fieldData. This will also effect an INSERT into the database. If the 
+  keyword argument refetch is passed and is true, or, if it is not and 
+  cls.refetch is true, effectively do a getUnique on cls.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="newfetch"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">newfetch</span>(<span class=sig-arg>cls</span>,
+          <span class="sig-kwarg">**fieldData</span>)</span>
+  </h3>
+  like new(), but always refetches.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="newnofetch"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">newnofetch</span>(<span class=sig-arg>cls</span>,
+          <span class="sig-kwarg">**fieldData</span>)</span>
+  </h3>
+  like new(), but never refetches.
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="rollback"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">rollback</span>(<span class=sig-arg>cls</span>)</span>
+  </h3>
+  Rollback current transaction
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+
+<a name="updateSome"></a>
+<table width="100%" class="func-details" bgcolor="#e0e0e0"><tr><td>
+  <h3><span class="sig"><span class="sig-name">updateSome</span>(<span class=sig-arg>cls</span>,
+          <span class=sig-arg>adict</span>,
+          <span class="sig-vararg">*args</span>,
+          <span class="sig-kwarg">**fieldData</span>)</span>
+  </h3>
+  update possibly many records at once, and return the number 
+  updated
+  <dl><dt></dt><dd>
+  </dd></dl>
+</td></tr></table>
+<br />
+
+
+<!-- =========== START OF CLASS VARIABLE DETAILS =========== -->
+<table class="details" border="1" cellpadding="3" cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="details">
+  <th colspan="2">Class Variable Details</th></tr>
+</table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="connectionAlias"></a>
+<h3>connectionAlias</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>NoneType</code>
+
+      </dd>
+<span title="None">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="guess_columns"></a>
+<h3>guess_columns</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>bool</code>
+
+      </dd>
+<span title="False">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+False                                                                  </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="guess_tablename"></a>
+<h3>guess_tablename</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>bool</code>
+
+      </dd>
+<span title="True">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+True                                                                   </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="guesscache"></a>
+<h3>guesscache</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>NoneType</code>
+
+      </dd>
+<span title="None">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="mutable"></a>
+<h3>mutable</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>bool</code>
+
+      </dd>
+<span title="True">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+True                                                                   </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="refetch"></a>
+<h3>refetch</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>bool</code>
+
+      </dd>
+<span title="False">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+False                                                                  </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="schema"></a>
+<h3>schema</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>NoneType</code>
+
+      </dd>
+<span title="None">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="sequence_mapper"></a>
+<h3>sequence_mapper</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>NoneType</code>
+
+      </dd>
+<span title="None">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="table"></a>
+<h3>table</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>str</code>
+
+      </dd>
+<span title="'pydo'">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+<span class="variable-quote">'</span>pydo<span class="variable-quote">'</span>                                                                 </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<table width="100%" class="var-details" bgcolor="#e0e0e0"><tr><td>
+<a name="use_attributes"></a>
+<h3>use_attributes</h3>
+<dl>
+  <dt></dt>
+  <dd>
+    <dl>
+      <dt><b>Type:</b></dt>
+      <dd>
+          <code>bool</code>
+
+      </dd>
+<span title="True">      <dt><b>Value:</b></dt>
+      <dd><table><tr><td>
+<pre class="variable">
+True                                                                   </pre>
+        </td></tr></table></dd>
+</span>    </dl>
+  </dd>
+</dl></td></tr></table>
+<br />
+
+
+<!-- =========== START OF NAVBAR =========== -->
+<table class="navbar" border="0" width="100%" cellpadding="0" bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="center">
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="pydo-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="trees.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="indices.html">Index</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar">&nbsp;&nbsp;&nbsp;<a class="navbar" href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+    <th class="navbar" align="right" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr><th class="navbar" align="center">
+        <p class="nomargin">
+          <a class="navbar" target="_top" href="http://skunkweb.org/pydo.html">pydo</a>
+      </p></th></tr></table>
+    </th>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td align="left"><font size="-2">Generated by Epydoc 2.0 on Thu Feb 15 13:21:48 2007</font></td>
+    <td align="right"><a href="http://epydoc.sourceforge.net"
+                      ><font size="-2">http://epydoc.sf.net</font></a></td>
+  </tr>
+</table>
+</body>
+</html>

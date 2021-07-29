@@ -1,0 +1,22 @@
+Metadata-Version: 1.0
+Name: PyDO
+Version: 2.0.1
+Summary: a Python ORM supporting many RDBMS backends
+Home-page: http://skunkweb.org/pydo2.html
+Author: Jacob Smullyan
+Author-email: smulloni@smullyan.org
+License: GPL/BSD
+Description: PyDO is a ORM (Object-Relational Mapper) database access library for
+        Python that facilitates writing a Python database access layer.  PyDO
+        attempts to be simple, flexible, extensible, and unconstraining.
+Keywords: ORM,database,SkunkWeb
+Platform: OS Independent
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: SQL
+Classifier: Topic :: Database
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

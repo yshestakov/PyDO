@@ -1,0 +1,73 @@
+Todo for 1.0:
+  * more tests, bugfixes
+  * Oracle introspection?
+  * autocommit broken for mysql and psycopg version < 2; probably 
+    broken for oracle and mssql (ok in sqlite).
+
+Todo for 1.1:
+  * generalize connection pool as connection provider, to facilitate
+    declaring initialization SQL or other actions at connection
+    creation time.
+   
+  * iterSome, iterfetch (may require Python 2.5 implementing PEP 342,
+    as resource cleanup needs to be done when a generator yielding
+    results is gced).  These would be generator methods, yielding
+    result rows rather than returning a list (like getSome and fetch
+    do).  
+
+  * refactor drivers so that db-specific stuff is separated from dbapi 
+    driver specific stuff; individual drivers would be mixins of one
+    of each.  This would be particularly useful for sqlrelay and odbc;
+    also it would make supporting multiple postgresql/oracle db api
+    drivers easier. 
+
+  * column aliases, possibly.  A bit hard to implement.  A field class
+    can do some of it, but currently the name attribute is used for
+    too much.  A distinction needs to be made between cases when you
+    use just an alias, cases when you use both the name and the alias
+    (an AS declaration), and cases where you just use the name.  And
+    in addition to the usage within sql itself, there is the usage
+    within Python, where you want to use the alias everywhere instead
+    of the real name.  This doesn't work particularly well with
+    operators and FIELD('x').
+
+  * fields: a nullable attribute, and support for nullable unique
+    constraints.  An issue here is what the default value of nullable
+    should be in different contexts.  For Unique and Sequence, clearly
+    it should be False.  For a simple string field, it should be True
+    -- *except* when the field is used in a multicolumn uniqueness
+    constraints.  What happens if someone declares Field('x') and then
+    uses it in a multicolumn unique constraint? It seems that a sort
+    of mess results from trying to add this attribute in a backwards
+    compatible way.  If the default value was False in all cases,
+    failures would occur when a null appeared.  Perhaps there should
+    be three values -- true, false, and unknown.  Or not.
+
+  
+Other databases to support (eventually):
+  * firebird
+  * sqlrelay 
+  * maxdb
+  * gadfly (does anyone use this?)
+  * odbc bindings (mxODBC; Drew's pure python version?) 
+  * oracle -- in progress
+  * ingres
+  * sybase
+  * db2
+
+
+
+..
+   Local Variables:
+   mode: rst
+   indent-tabs-mode: nil
+   sentence-end-double-space: t
+   fill-column: 70
+   End:
+
+
+
+
+  
+
+

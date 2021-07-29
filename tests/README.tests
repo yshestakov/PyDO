@@ -1,0 +1,103 @@
+.. -*-rst-*-
+
+README.tests
+++++++++++++
+
+To run these tests, copy pydotestrc.sample to ~/.pydotestrc and edit
+to taste, then run::
+   
+   python runtests.py -d <drivers> -t <tags>
+
+If you don't specify a driver, it will attempt to run tests with all
+drivers, skipping any that it doesn't find configuration for, even if
+the tests don't require a driver.  You can leave the tag option out.
+
+Multiple tags/drivers should be separated by spaces; so if you use
+multiple tags/drivers, use quotations marks around the value::
+
+   python runtests.py -d "mysql sqlite"
+
+You can also specify a regular expression pattern to select tests; it
+will be matched against the names of the test functions::
+
+   python runtests.py -d sqlite -p 'base|frog'
+
+
+Test Plan
+---------
+
+We need unit tests for the following items, by module.
+
+   Legend
+   ------
+
+   X   Some tests
+   N   No explicit tests, but functionality is tested by other tests
+   D   Complete test coverage
+
+dbi
+~~~
+
+- initAlias			X
+- delAlias			X
+- pools				X
+- threads			X
+- swapConnection		X
+- introspection			N
+- autocommit			X
+- transactions			N
+
+base
+~~~~
+
+- schema			X
+- fields			N
+- inheritance			X
+- sequences			N
+- unique			X
+- guess_columns			X
+- guess_tablename		N
+- update			X
+- updateSome			X
+- deleteSome			X
+- getSome			X
+  - raw SQL			N
+  - operators			N
+  - order by, limit, offset	N
+- mutable
+- new				X
+- getUnique			X
+- delete			X
+- refresh			X
+- project			X
+  - string fields		X
+- guesscache			X
+- joinTable			X
+- pickling of PyDO objects	X
+
+operators
+~~~~~~~~~
+
+- converters
+  - paramstyles
+- sql generation		N
+
+dbtypes
+~~~~~~~
+
+- dbtypes wrapper classes
+- uniform treatment of dates, times
+
+multifetch
+~~~~~~~~~~
+
+- aliases			X
+
+fields
+~~~~~~
+
+- ??
+
+
+
+

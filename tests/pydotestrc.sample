@@ -1,0 +1,6 @@
+# -*-python-*-
+
+psycopg=dict(connectArgs=dict(dsn='user=pydotest dbname=pydotest host=localhost'))
+sqlite=dict(connectArgs=dict(database='/tmp/pydotest_sqlite.db'))
+sqlite2=dict(connectArgs=dict(database=':memory:'))
+mysql=dict(connectArgs=dict(db='pydotest', user='pydotest'))
