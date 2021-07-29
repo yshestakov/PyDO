@@ -1,4 +1,8 @@
-import cPickle
+import sys
+if sys.version_info[0] == 2:
+    import cPickle as pickle
+else:
+    import pickle
 import os
 import tempfile
 import time
@@ -16,9 +20,9 @@ class GuessCache(object):
         self.cachedir=cachedir
         if os.path.exists(cachedir):
             if not os.path.isdir(cachedir):
-                raise RuntimeException, "not a directory: %s" % cachedir
+                raise RuntimeException("not a directory: %s" % cachedir)
             if not os.access(cachedir, os.W_OK | os.R_OK | os.X_OK):
-                raise RuntimeException, "cannot access directory: %s" % cachedir
+                raise RuntimeException("cannot access directory: %s" % cachedir)
         else:
             os.makedirs(cachedir)
 
@@ -36,7 +40,7 @@ class GuessCache(object):
         path=self.pathForObj(obj)
         if os.path.exists(path):
             fp=open(path, 'rb')
-            data=cPickle.load(fp)
+            data=pickle.load(fp)
             fp.close()
             return data
         return None
@@ -50,7 +54,7 @@ class GuessCache(object):
         path=self.pathForObj(obj, True)
         tmppath='%s~%d%d' % (path, os.getpid(), int(time.time()))
         fp=open(tmppath, 'wb')
-        cPickle.dump(data, fp, 2)
+        pickle.dump(data, fp, 2)
         fp.close()
         os.rename(tmppath, path)
 

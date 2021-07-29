@@ -52,7 +52,7 @@ class Sqlite3DBI(DBIBase):
       The schema parameter is not supported by this driver.
       """
       if schema is not None:
-         raise ValueError, "db schemas not supported by sqlite driver"
+         raise ValueError("db schemas not supported by sqlite driver")
       sql="SELECT name FROM sqlite_master WHERE type='table' ORDER BY NAME"
       c=self.conn.cursor()
       c.execute(sql)
@@ -64,7 +64,7 @@ class Sqlite3DBI(DBIBase):
 
    def describeTable(self, table, schema=None):
       if schema is not None:
-         raise ValueError, "db schemas not supported by sqlite driver"
+         raise ValueError("db schemas not supported by sqlite driver")
       
       fields={}
       unique=set()
@@ -83,7 +83,7 @@ class Sqlite3DBI(DBIBase):
       execute(sql)
       res=c.fetchall()
       if not res:
-         raise ValueError, "no such table: %s" % table
+         raise ValueError("no such table: %s" % table)
       for row in res:
          cid, name, type, notnull, dflt_value, pk=row
          # we ignore the nullable bit for sequences, because

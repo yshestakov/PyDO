@@ -43,7 +43,7 @@ for t, ulist in (('date', ('DATE',)),
     del c, u
 del t, ulist
 
-      
+
 #
 # pysqlite has its own mechanism for handling conversions between
 # database columns and Python datatypes: Dates and Datetimes are
@@ -51,8 +51,8 @@ del t, ulist
 # are returned as buffer objects. Other adapters can be added by
 # user code, so there's no need to use PyDO's converter protocols.
 #
-# I'm not sure therefore if the SqliteConverter class really needs 
-# to exist, but no harm in its being here explicitly, and maybe some 
+# I'm not sure therefore if the SqliteConverter class really needs
+# to exist, but no harm in its being here explicitly, and maybe some
 # other conversion will be needed which sqlite can't cope with.
 #
 class SqliteConverter(BindingConverter):
@@ -87,27 +87,27 @@ class SqliteDBI(DBIBase):
       # for isolation level on pysqlite.
       #
       self._isolation_level = ""
-   
+
    def getConverter(self):
       return SqliteConverter(self.paramstyle)
 
    def getAutoIncrement(self, name):
       sql="SELECT last_insert_rowid ()"
       return self.conn.execute (sql).fetchone ()[0]
-   
+
    def listTables(self, schema=None):
       """list the tables in the database schema.
       The schema parameter is not supported by this driver.
       """
       if schema is not None:
-         raise ValueError, "db schemas not supported by sqlite driver"
+         raise ValueError("db schemas not supported by sqlite driver")
       sql="SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
       return self.conn.execute (sql).fetchall ()
 
    def describeTable(self, table, schema=None):
       if schema is not None:
-         raise ValueError, "db schemas not supported by sqlite driver"
-      
+         raise ValueError("db schemas not supported by sqlite driver")
+
       fields={}
       unique=set()
 
@@ -120,12 +120,12 @@ class SqliteDBI(DBIBase):
             c.execute(sql)
       else:
          execute=c.execute
-      
+
       sql="pragma table_info('%s')" % table
       execute(sql)
       res=c.fetchall()
       if not res:
-         raise ValueError, "no such table: %s" % table
+         raise ValueError("no such table: %s" % table)
       for row in res:
          cid, name, type, notnull, dflt_value, pk=row
          # we ignore the nullable bit for sequences, because
@@ -138,7 +138,7 @@ class SqliteDBI(DBIBase):
             fields[name]=Field(name)
          if not int(notnull):
             nullable.append(name)
-            
+
       # get indexes
       sql="pragma index_list('%s')" % table
       execute(sql)
@@ -168,7 +168,7 @@ class SqliteDBI(DBIBase):
          return (self.conn.isolation_level is None)
       def fset(self, val):
          current_value = (self.conn.isolation_level is None)
-         if bool (current_value) <> bool (val):
+         if bool (current_value) != bool (val):
            if val:
               self._isolation_level = self.conn.isolation_level
               self.conn.isolation_level = None

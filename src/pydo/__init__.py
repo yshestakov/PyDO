@@ -26,6 +26,6 @@ from pydo.utils import getall
 __all__=getall('pydo.%s' % m for m in \
                'exceptions field guesscache base operators dbi dbtypes log multifetch'.split())
 del getall
-    
 
-__version__='2.0.1'
+
+__version__='2.0.2'

@@ -6,8 +6,11 @@ from pydo.operators import AND, EQ, FIELD, IS, NULL
 from pydo.dbtypes import unwrap
 from pydo.utils import (_tupleize, _setize, formatTexp, moduleize,
                         _strip_tablename, every, string_to_obj)
-
-from itertools import izip
+import sys
+if sys.version_info[0] == 2:
+    from itertools import izip as zip
+else:
+    basestring=str
 import re
 from inspect import isfunction
 
@@ -88,8 +91,8 @@ class _metapydo(type):
                 # assume it is a path
                 cls.guesscache=GuessCache(cls.guesscache)
             if 'fields' in namespace or 'unique' in namespace:
-                raise ValueError, ("incompatible declarations: guess_columns "
-                                   "with explicit declaration of fields and/or unique")
+                raise ValueError("incompatible declarations: guess_columns "
+                                 "with explicit declaration of fields and/or unique")
             gfields, gunique=cls._getTableDescription()
             namespace['fields']=gfields.values()
             namespace['unique']=gunique
@@ -117,7 +120,7 @@ class _metapydo(type):
             elif isinstance(f, (tuple, list)):
                 f=cls._create_field(*f)
             elif not isinstance(f, Field):
-                raise ValueError, "cannot coerce into a field: %s" % f
+                raise ValueError("cannot coerce into a field: %s" % f)
                 
             # add to field container
             fielddict[f.asname]=f
@@ -253,8 +256,8 @@ class PyDO(dict):
         acceptable=frozenset(('mutable','module'))
         diff=frozenset(kwargs)-acceptable
         if diff:
-            raise ValueError, "unrecognized keyword arguments: %s" \
-                  % ', '.join(str(x) for x in diff)
+            raise ValueError("unrecognized keyword arguments: %s" \
+                  % ', '.join(str(x) for x in diff))
         mutable=kwargs.get('mutable', cls.mutable)
         module=kwargs.get('module', None)
         s=[]
@@ -267,7 +270,7 @@ class PyDO(dict):
                 elif isinstance(f, basestring):
                     f=cls._create_field(f)
                 else:
-                    raise ValueError, "weird thing in field list: %s" % f
+                    raise ValueError("weird thing in field list: %s" % f)
             s.append(f.asname.lower())
         s.sort()
         if kwargs:
@@ -292,9 +295,9 @@ class PyDO(dict):
     def update(self, adict):
         """ Part of dictionary interface for field access"""
         if not self.mutable:
-            raise ValueError, "instance isn't mutable!"
+            raise ValueError("instance isn't mutable!")
         if not self._unique:
-            raise ValueError, "cannot update without unique index!"
+            raise ValueError("cannot update without unique index!")
         # call (normally empty) hook for modifying the update
         d=self.onUpdate(adict)
         # Check that the fields in the dictionary are kosher
@@ -340,13 +343,13 @@ class PyDO(dict):
             if self._ignore_update_rowcount:
                 pass
             else:
-                raise PyDOError, "updated %s rows instead of 1" % result        
+                raise PyDOError("updated %s rows instead of 1" % result)
 
     @classmethod
     def updateSome(cls, adict, *args, **fieldData):
         """update possibly many records at once, and return the number updated"""
         if not cls.mutable:
-            raise ValueError, "class isn't mutable!"
+            raise ValueError("class isn't mutable!")
         # N.B. it *is* possible to use this method without a unique index
         if not adict:
             # vacuous update, just return
@@ -375,19 +378,19 @@ class PyDO(dict):
     
     def clear(self):
         """not implemented for PyDO classes"""
-        raise NotImplementedError, "PyDO classes don't implement clear()"
+        raise NotImplementedError("PyDO classes don't implement clear()")
 
     def pop(self):
         """not implemented for PyDO classes"""
-        raise NotImplementedError, "PyDO classes don't implement pop()"
+        raise NotImplementedError("PyDO classes don't implement pop()")
 
     def popitem(self):
         """not implemented for PyDO classes"""
-        raise NotImplementedError, "PyDO classes don't implement popitem()"
+        raise NotImplementedError("PyDO classes don't implement popitem()")
 
     def setdefault(self, key, val):
         """not implemented for PyDO classes"""
-        raise NotImplementedError, "PyDO classes don't implement setdefault()"
+        raise NotImplementedError("PyDO classes don't implement setdefault()")
     
     @classmethod
     def getColumns(cls, qualifier=None, with_as=False):
@@ -433,8 +436,8 @@ class PyDO(dict):
         asnames=cls._fields
         for k in adict:
             if not k in asnames:
-                raise KeyError, "object %s has no field %s" %\
-                      (cls, k)
+                raise KeyError("object %s has no field %s" %\
+                      (cls, k))
 
     # DB interface
     @classmethod
@@ -482,9 +485,9 @@ class PyDO(dict):
     @classmethod
     def _new(cls, fieldData, refetch):
         if not cls.mutable:
-            raise ValueError, 'cannot make a new immutable object!'
+            raise ValueError('cannot make a new immutable object!')
         if refetch and not cls._unique:
-            raise ValueError, "cannot refetch without a unique index!"
+            raise ValueError("cannot refetch without a unique index!")
         # sanity check the field data
         cls._validateFields(fieldData)
         
@@ -505,7 +508,7 @@ class PyDO(dict):
                  ', '.join(converted))
         res = conn.execute(sql, converter.values)
         if res != 1:
-            raise PyDOError, "inserted %s rows instead of 1" % res
+            raise PyDOError("inserted %s rows instead of 1" % res)
         
         if conn.auto_increment:
             for k, v in cls._sequenced.items():
@@ -553,11 +556,11 @@ class PyDO(dict):
         """
         unique = cls._matchUnique(kw)
         if not unique:
-            raise ValueError, 'No way to get unique row! %s %s' % \
-                  (str(kw), unique)
+            raise ValueError('No way to get unique row! %s %s' % \
+                  (str(kw), unique))
         for u in unique:
             if kw[u] in (None, NULL):
-                raise ValueError, "NULL value encountered for field declared unique: %s" % u
+                raise ValueError("NULL value encountered for field declared unique: %s" % u)
             
         if converter is None:
             converter=conn.getConverter()        
@@ -585,7 +588,7 @@ class PyDO(dict):
         if not results or not isinstance(results, (list,tuple)):
             return
         if len(results) > 1:
-            raise PyDOError, 'got more than one row on unique query!'
+            raise PyDOError('got more than one row on unique query!')
         if results:
             return cls(results[0]) 
 
@@ -600,7 +603,7 @@ class PyDO(dict):
     def _processWhere(conn, args, fieldData, converter=None):
         if args and isinstance(args[0], basestring):
             if fieldData:
-                raise ValueError, "cannot pass keyword args when including sql string"
+                raise ValueError("cannot pass keyword args when including sql string")
             sql=args[0]
             values=args[1:]
             if len(values)==1 and isinstance(values[0], dict):
@@ -617,10 +620,10 @@ class PyDO(dict):
                             values=origVals
                         else:
                             # two different bind formats are being used, that's a no-no.
-                            raise ValueError, "incompatible bind variable format"
+                            raise ValueError("incompatible bind variable format")
                     else:
                         if isinstance(origVals, dict):
-                            raise ValueError, "incompatible bind variable format"
+                            raise ValueError("incompatible bind variable format")
                         assert isinstance(origVals, (list, tuple))
                         values=list(origVals)+list(values)
         else:
@@ -699,7 +702,7 @@ class PyDO(dict):
     def deleteSome(cls, *args, **fieldData):
         """delete possibly many records at once, and return the number deleted"""
         if not cls.mutable:
-            raise ValueError, "cannot deleteSome through an immutable class"
+            raise ValueError("cannot deleteSome through an immutable class")
         conn=cls.getDBI()
         sql, values=cls._processWhere(conn, args, fieldData)
         query=["DELETE FROM %s" % cls.getTable()]
@@ -710,9 +713,9 @@ class PyDO(dict):
     def delete(self):
         """remove the row that represents me in the database"""
         if not self.mutable:
-            raise ValueError, "instance isn't mutable!"
+            raise ValueError("instance isn't mutable!")
         if not self._unique:
-            raise ValueError, "cannot delete, no unique index!"
+            raise ValueError("cannot delete, no unique index!")
         conn = self.getDBI()
         unique, values = self._uniqueWhere(conn, self)
         # if the class has unique constraints, and all data
@@ -728,10 +731,10 @@ class PyDO(dict):
     def refresh(self):
         """refetch myself from the database"""
         if not self._unique:
-            raise ValueError, "cannot refresh without a unique index"
+            raise ValueError("cannot refresh without a unique index")
         obj = self.getUnique(**self)
         if not obj:
-            raise ValueError, "current object doesn't exist in database!"
+            raise ValueError("current object doesn't exist in database!")
         # the ordinary dict update needs to be called here, not the
         # overloaded method that updates the database!
         super(PyDO, self).update(obj)
@@ -821,11 +824,11 @@ class PyDO(dict):
         thatAttrNames = _tupleize(thatAttrNames)
         
         if len(thisSideColumns) != len(thisAttrNames):
-            raise ValueError, ('thisSideColumns and thisAttrNames must '
-                               'contain the same number of elements')
+            raise ValueError('thisSideColumns and thisAttrNames must '
+                             'contain the same number of elements')
         if len(thatSideColumns) != len(thatAttrNames):
-            raise ValueError, ('thatSideColumns and thatAttrNames must '
-                               'contain the same number of elements')
+            raise ValueError('thatSideColumns and thatAttrNames must '
+                             'contain the same number of elements')
         
         sql=[thatObject._baseSelect(True),
              ', ',
@@ -918,11 +921,11 @@ class ForeignKey(object):
         if isinstance(that_side, basestring):
             that_side=(that_side,)
         if len(this_side) != len(that_side):
-            raise ValueError, \
+            raise ValueError(
                   "lengths of keys do not match: %d "\
                   "(length of %s) != %d (length of %s)" \
                   % (len(this_side), str(this_side),
-                     len(that_side), str(that_side))
+                     len(that_side), str(that_side)))
         self.this_side=this_side            
         self.that_side=that_side
         self._kls=kls
@@ -945,8 +948,8 @@ class ForeignKey(object):
             obj.update(dict((f, None) for f in self.this_side))
         else:
             if not isinstance(value, self.kls):
-                raise ValueError, "value passed is a %s, not an instance of %s" \
-                      % (type(value), self.kls.__name__)
+                raise ValueError("value passed is a %s, not an instance of %s" \
+                      % (type(value), self.kls.__name__))
             else:
                 obj.update(dict((this, value[that]) \
                                 for this, that in zip(self.this_side,
@@ -962,11 +965,11 @@ def OneToMany(this_side, that_side, kls):
     if isinstance(that_side, basestring):
         that_side=(that_side,)
     if len(this_side) != len(that_side):
-        raise ValueError, \
+        raise ValueError(
               "lengths of keys do not match: %d "\
               "(length of %s) != %d (length of %s)" \
               % (len(this_side), str(this_side),
-                 len(that_side), str(that_side))
+                 len(that_side), str(that_side)))
     zipped=zip(that_side, this_side)
 
 
@@ -989,7 +992,7 @@ def OneToMany(this_side, that_side, kls):
             # merge values
             if isinstance(values, dict):
                 if not isinstance(extravalues, dict):
-                    raise ValueError, "expected dictionary of bind variables!"
+                    raise ValueError("expected dictionary of bind variables!")
                 values.update(extravalues)
                 newargs=(sql, values)
             else:

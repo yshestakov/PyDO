@@ -3,7 +3,9 @@ from pydo.log import debug
 from pydo.utils import iflatten, _strip_tablename
 from inspect import isclass
 import string
-from itertools import izip
+import sys
+if sys.version_info[0] == 2:
+    from itertools import izip as zip
 
 class TableAlias(object):
     def __init__(self, obj, alias):
@@ -36,13 +38,13 @@ def _processResultSpec(resultSpec):
                 # an alias
                 yield TableAlias(*i)
             else:
-                raise ValueError, "nested sequence!"
+                raise ValueError("nested sequence!")
         else:
             if isclass(i):
                 if not issubclass(i, PyDO):
-                    raise ValueError, "unknown class"
+                    raise ValueError("unknown class")
             elif not isinstance(i, (TableAlias, basestring)):
-                raise ValueError, "table alias or string expression: %s" % i
+                raise ValueError("table alias or string expression: %s" % i)
             yield i            
 
 def iterfetch(resultSpec, sqlTemplate, *values, **kwargs):
@@ -90,10 +92,9 @@ def iterfetch(resultSpec, sqlTemplate, *values, **kwargs):
     # check that all objs have the same connectionAlias
     caliases=tuple(frozenset(o.connectionAlias for o in objs))
     if len(caliases)>1:
-        raise ValueError, \
-              "objects passed to fetch must have same connection alias"
+        raise ValueError("objects passed to fetch must have same connection alias")
     elif len(caliases)==0:
-        raise ValueError, "must supply some object in result spec"
+        raise ValueError("must supply some object in result spec")
     dbi=objs[0].getDBI()    
 
     tables = ', '.join(x.getTable() for x in objs)
@@ -131,7 +132,7 @@ def iterfetch(resultSpec, sqlTemplate, *values, **kwargs):
     for row in result:
         del retrow[:]
         p=0
-        for o, cols in izip(resultSpec, allcols):
+        for o, cols in zip(resultSpec, allcols):
             if isinstance(o, basestring):
                 retrow.append(row[p])
                 p+=1

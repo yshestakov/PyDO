@@ -6,6 +6,7 @@ LICENSE
 MANIFEST.in
 README
 TODO
+setup.cfg
 setup.py
 doc/Makefile
 doc/manual.html

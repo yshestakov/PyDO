@@ -10,7 +10,7 @@ from pydo.dbi import DBIBase, ConnectionPool
 from pydo.exceptions import PyDOError
 from pydo.log import debug
 from pydo.operators import BindingConverter
-from pydo.dbtypes import (DATE, TIMESTAMP, BINARY, INTERVAL, 
+from pydo.dbtypes import (DATE, TIMESTAMP, BINARY, INTERVAL,
                           date_formats, timestamp_formats)
 from pydo.field import Field
 
@@ -33,7 +33,7 @@ try:
    havemx=True
 except ImportError:
    havemx=False
-    
+
 if havemx:
    try:
       from psycopg import TimestampFromMx
@@ -42,7 +42,7 @@ if havemx:
       def TimestampFromMx(x):
          return psycopg.TimestampFromTicks(x.ticks())
 elif psycopg_version==1:
-   raise ImportError, "mx.DateTime required when using psycopg version 1"
+   raise ImportError("mx.DateTime required when using psycopg version 1")
 
 def convert_DATE(dt):
    val=dt.value
@@ -64,9 +64,9 @@ def convert_DATE(dt):
          else:
             return psycopg.Date(*t)
       else:
-         raise ValueError, "cannot parse date format: '%s'" % val
-   raise ValueError, val
-    
+         raise ValueError("cannot parse date format: '%s'" % val)
+   raise ValueError(val)
+
 
 def convert_TIMESTAMP(ts):
    val=ts.value
@@ -87,9 +87,9 @@ def convert_TIMESTAMP(ts):
          else:
             return psycopg.TimestampFromTicks(time.mktime(t))
       else:
-         raise ValueError, "cannot parse timestamp format: '%s'" % val
-   raise ValueError, val
-    
+         raise ValueError("cannot parse timestamp format: '%s'" % val)
+   raise ValueError(val)
+
 _converters={datetime.datetime: lambda x: psycopg.TimestampFromTicks(time.mktime(x.timetuple())),
              datetime.date: lambda x: psycopg.Date(x.year, x.month, x.day),
              DATE: convert_DATE,
@@ -102,11 +102,11 @@ if havemx:
     _converters[mx.DateTime.DateTimeType]=TimestampFromMx
     _converters[mx.DateTime.DateTimeDeltaType]=lambda x: x.strftime("%d:%H:%M:%S")
 
-class PsycopgConverter(BindingConverter): 
+class PsycopgConverter(BindingConverter):
     converters=_converters
 
 class PsycopgDBI(DBIBase):
-    
+
     def __init__(self, connectArgs, pool=None, verbose=False, initFunc=None):
        if pool and not hasattr(pool, 'connect'):
           pool=ConnectionPool()
@@ -142,10 +142,10 @@ class PsycopgDBI(DBIBase):
 ##             return fget, fset, None, None
 ##        autocommit=property(*autocommit())
         autocommit=False
-    
+
     def getConverter(self):
         return PsycopgConverter(self.paramstyle)
-    
+
     def execute(self, sql, values=(), qualified=False):
         """Executes the statement with the values and does conversion
         of the return result as necessary.
@@ -169,7 +169,7 @@ class PsycopgDBI(DBIBase):
             return -1
         res=self._convertResultSet(c.description, resultset, qualified)
         c.close()
-        return res    
+        return res
 
     def getSequence(self, name, field, table):
         if name==True:
@@ -184,7 +184,7 @@ class PsycopgDBI(DBIBase):
         cur.execute(sql)
         res=cur.fetchone()
         if not res:
-            raise PyDOError, "could not get value for sequence %s!" % name
+            raise PyDOError("could not get value for sequence %s!" % name)
         return res[0]
 
 
@@ -210,7 +210,7 @@ class PsycopgDBI(DBIBase):
         if not res:
             return []
         return sorted(x[0] for x in res)
-        
+
 
     def describeTable(self, table, schema=None):
         # verify that the table exists
@@ -236,8 +236,8 @@ class PsycopgDBI(DBIBase):
             # it exists, get on with it
             break
         else:
-            raise ValueError, "no such table or view: %s.%s" % (schema, table)
-        
+            raise ValueError("no such table or view: %s.%s" % (schema, table))
+
         sql = """
         SELECT a.attname, a.attnum
         FROM pg_catalog.pg_attribute a,
@@ -317,4 +317,4 @@ class PsycopgDBI(DBIBase):
         for f in fields.values():
             d[f.name] = f
         return (d, unique)
-    
+

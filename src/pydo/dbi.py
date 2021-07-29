@@ -1,4 +1,8 @@
-from itertools import izip
+import sys
+if sys.version_info[0] == 2:
+    from itertools import izip as zip
+else:
+    basestring=str
 from threading import Lock, local
 from collections import deque
 import time
@@ -147,7 +151,7 @@ class DBIBase(object):
             fldnames=[x[0] for x in description]
         else:
             fldnames=[_strip_tablename(x[0]) for x in description]
-        return [dict(izip(fldnames, row)) for row in resultset]
+        return [dict(zip(fldnames, row)) for row in resultset]
 
     @staticmethod
     def orderByString(order, limit, offset):
@@ -261,7 +265,7 @@ def initAlias(alias, driver, connectArgs, pool=None, verbose=False, init=None):
     elif isinstance(init, (list, tuple)):
         for s in init:
             if not isinstance(s, basestring):
-                raise ValueError, "expected string, got %s" % s
+                raise ValueError("expected string, got %s" % s)
         sql=init
         def init(conn):
             c=conn.cursor()
@@ -269,8 +273,8 @@ def initAlias(alias, driver, connectArgs, pool=None, verbose=False, init=None):
                 c.execute(s)
             c.close()
     elif init and not callable(init):
-        raise ValueError, \
-              "init must be either None, a string, or callable, got %s" % type(init)
+        raise ValueError("init must be either None, a string, "
+                         "or callable, got %s" % type(init))
         
     data=dict(driver=driver,
               connectArgs=connectArgs,
@@ -285,7 +289,7 @@ def initAlias(alias, driver, connectArgs, pool=None, verbose=False, init=None):
             # get rid of connection for the sake of comparison
             old.pop('connection', None)
             if data!=old:
-                raise ValueError, "already initialized: %s" % alias
+                raise ValueError("already initialized: %s" % alias)
         else:
             _aliases[alias]=data
     finally:
@@ -309,7 +313,7 @@ def getConnection(alias, create=True):
         try:
             conndata=_aliases[alias]
         except KeyError:
-            raise ValueError, "alias %s not recognized" % alias
+            raise ValueError("alias %s not recognized" % alias)
         if not conndata.has_key('connection'):
             if not create:
                 return None
@@ -404,9 +408,9 @@ class ConnectionPool(object):
                         # can't create more, must retry or barf
                         if not retries:
                             # barf
-                            raise PyDOError, \
+                            raise PyDOError(
                                   ("all connections in use, attempted retries: "
-                                   "%d") % self._retries
+                                   "%d") % self._retries)
                         else:
                             # retry, but get out of the mutex first
                             c=None

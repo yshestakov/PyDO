@@ -1,10 +1,12 @@
-Metadata-Version: 1.0
+Metadata-Version: 1.2
 Name: PyDO
 Version: 2.0.1
 Summary: a Python ORM supporting many RDBMS backends
 Home-page: http://skunkweb.org/pydo2.html
-Author: Jacob Smullyan
-Author-email: smulloni@smullyan.org
+Author: Drew Csillag
+Author-email: drew_csillag@yahoo.com
+Maintainer: Jacob Smullyan
+Maintainer-email: smulloni@smullyan.org
 License: GPL/BSD
 Description: PyDO is a ORM (Object-Relational Mapper) database access library for
         Python that facilitates writing a Python database access layer.  PyDO

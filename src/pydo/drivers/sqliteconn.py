@@ -45,8 +45,8 @@ def convert_DATE(dt):
          else:
             return mx.DateTime.DateFrom(*t)
       else:
-         raise ValueError, "cannot parse date format: '%s'" % val
-   raise ValueError, val
+         raise ValueError("cannot parse date format: '%s'" % val)
+   raise ValueError(val)
 
 def convert_TIMESTAMP(ts):
    val=ts.value
@@ -65,8 +65,8 @@ def convert_TIMESTAMP(ts):
          except ValueError:
             continue
       else:
-         raise ValueError, "cannot parse timestamp format: '%s'" % val
-   raise ValueError, val
+         raise ValueError("cannot parse timestamp format: '%s'" % val)
+   raise ValueError(val)
 
 
 _converters={datetime.datetime: lambda x: mx.DateTime.DateTimeFromTicks(time.mktime(x.timetuple())),
@@ -93,19 +93,19 @@ class SqliteDBI(DBIBase):
                                       pool,
                                       verbose,
                                       initFunc)
-   
+
    def getConverter(self):
       return SqliteConverter(self.paramstyle)
 
    def getAutoIncrement(self, name):
       return self.conn.db.sqlite_last_insert_rowid()
-   
+
    def listTables(self, schema=None):
       """list the tables in the database schema.
       The schema parameter is not supported by this driver.
       """
       if schema is not None:
-         raise ValueError, "db schemas not supported by sqlite driver"
+         raise ValueError("db schemas not supported by sqlite driver")
       sql="SELECT name FROM sqlite_master WHERE type='table' ORDER BY NAME"
       c=self.conn.cursor()
       c.execute(sql)
@@ -118,8 +118,8 @@ class SqliteDBI(DBIBase):
 
    def describeTable(self, table, schema=None):
       if schema is not None:
-         raise ValueError, "db schemas not supported by sqlite driver"
-      
+         raise ValueError("db schemas not supported by sqlite driver")
+
       fields={}
       unique=set()
 
@@ -132,12 +132,12 @@ class SqliteDBI(DBIBase):
             c.execute(sql)
       else:
          execute=c.execute
-      
+
       sql="pragma table_info('%s')" % table
       execute(sql)
       res=c.fetchall()
       if not res:
-         raise ValueError, "no such table: %s" % table
+         raise ValueError("no such table: %s" % table)
       for row in res:
          cid, name, type, notnull, dflt_value, pk=row
          # we ignore the nullable bit for sequences, because
@@ -150,7 +150,7 @@ class SqliteDBI(DBIBase):
             fields[name]=Field(name)
          if not int(notnull):
             nullable.append(name)
-            
+
       # get indexes
       sql="pragma index_list('%s')" % table
       execute(sql)

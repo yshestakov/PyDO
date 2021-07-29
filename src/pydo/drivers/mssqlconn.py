@@ -19,7 +19,7 @@ import adodbapi
 
 def connection_string (server, database):
   return "Provider=SQLOLEDB;Data Source=%s;Initial Catalog=%s;Integrated Security=SSPI;" % (server, database)
-  
+
 def convert_DATE(dt):
    val=dt.value
    if isinstance(val, mx.DateTime.DateTimeType):
@@ -40,8 +40,8 @@ def convert_DATE(dt):
          else:
             return mx.DateTime.DateFrom(*t)
       else:
-         raise ValueError, "cannot parse date format: '%s'" % val
-   raise ValueError, val
+         raise ValueError("cannot parse date format: '%s'" % val)
+   raise ValueError(val)
 
 def convert_TIMESTAMP(ts):
    val=ts.value
@@ -60,8 +60,8 @@ def convert_TIMESTAMP(ts):
          except ValueError:
             continue
       else:
-         raise ValueError, "cannot parse timestamp format: '%s'" % val
-   raise ValueError, val
+         raise ValueError("cannot parse timestamp format: '%s'" % val)
+   raise ValueError(val)
 
 
 _converters={datetime.datetime: lambda x: mx.DateTime.DateTimeFromTicks(time.mktime(x.timetuple())),
@@ -147,8 +147,8 @@ class MssqlDBI(DBIBase):
          execute=c.execute
 
       sql = """
-        select 
-          column_name = col.COLUMN_NAME, 
+        select
+          column_name = col.COLUMN_NAME,
           is_nullable = CASE LOWER (col.IS_NULLABLE) WHEN 'yes' THEN 1 ELSE 0 END,
           is_identity = COLUMNPROPERTY (OBJECT_ID (col.TABLE_SCHEMA + '.' + col.TABLE_NAME), col.COLUMN_NAME, 'IsIdentity'),
           is_primary_key = CASE WHEN ccu.COLUMN_NAME IS NULL THEN 0 ELSE 1 END
@@ -171,9 +171,9 @@ class MssqlDBI(DBIBase):
       for name, is_nullable, is_identity, is_primary_key in c.fetchall ():
         #
         # We're only interested in a sequence if it is
-        #  a NOT-NULL PK IDENTITY. 
-        #  ROWGUIDCOL columns probably do not count here, 
-        #   since their values have to be filled in by hand 
+        #  a NOT-NULL PK IDENTITY.
+        #  ROWGUIDCOL columns probably do not count here,
+        #   since their values have to be filled in by hand
         #   although typically via a DEFAULT of NewID ().
         #
         if is_identity and not is_nullable and is_primary_key:
@@ -182,7 +182,7 @@ class MssqlDBI(DBIBase):
           fields[name] = Field (name)
         if is_nullable:
           nullable.append (name)
-        
+
       #
       # In theory this query should pull out unique constraints
       #  and unique indexes, but in practice it only pulls out
@@ -216,7 +216,7 @@ class MssqlDBI(DBIBase):
         q2 = self.conn.cursor ()
         q2.execute (column_sql % (constraint_catalog, constraint_schema, constraint_name))
         unique.add (frozenset ([r[0] for r in q2.fetchall ()]))
-        
+
       #
       # The adodbapi driver complains if the sp_helpindex returns with
       #  no indexes, so make sure that there is at least one before
@@ -227,7 +227,7 @@ class MssqlDBI(DBIBase):
       """ % (schema, table)
       execute (sql)
       rows = c.fetchall ()
-      print "rows=", rows
+      print("rows=", rows)
       if rows: # c.fetchall ():
         sql = "sp_helpindex '%s.%s'" % (schema, table)
         execute (sql)
@@ -240,5 +240,5 @@ class MssqlDBI(DBIBase):
           descriptions = [d.strip () for d in index_description.lower ().replace (",", " ").split ()]
           if "unique" in descriptions:
             unique.add (frozenset ([k.strip () for k in index_keys.split (",")]))
-      
+
       return fields, unique

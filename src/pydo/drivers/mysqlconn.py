@@ -22,7 +22,7 @@ class MysqlDBI(DBIBase):
     auto_increment=True
     autocommit=True
     has_sane_rowcount=False
-    
+
     def __init__(self, connectArgs, pool=None, verbose=False, initFunc=None):
         if pool and not hasattr(pool, 'connect'):
             pool=ConnectionPool()
@@ -32,12 +32,12 @@ class MysqlDBI(DBIBase):
                                        pool,
                                        verbose,
                                        initFunc)
-    
+
     def getAutoIncrement(self, name):
         try:
             return self.conn.insert_id()
         except AttributeError:
-            raise PyDOError, "could not get insert id!"
+            raise PyDOError("could not get insert id!")
 
     def getConverter(self):
         return MysqlConverter(self.paramstyle)
@@ -63,12 +63,12 @@ class MysqlDBI(DBIBase):
                 cur.execute(sql)
         else:
             execute=cur.execute
-            
+
         sql="SHOW TABLES LIKE '%s'" % table
         execute(sql)
         res=cur.fetchone()
         if not res:
-            raise ValueError, "table %s not found" % table
+            raise ValueError("table %s not found" % table)
         sql="SHOW COLUMNS FROM %s" % table
         execute(sql)
         res=cur.fetchall()
@@ -82,7 +82,7 @@ class MysqlDBI(DBIBase):
                 fields[name]=Sequence(name)
             else:
                 fields[name]=Field(name)
-                
+
         sql="SHOW INDEX FROM %s" % table
         execute(sql)
         res=cur.fetchall()
@@ -109,4 +109,4 @@ class MysqlDBI(DBIBase):
 
         unique=set(frozenset(x) for x in indices.values())
         return fields, unique
-            
+

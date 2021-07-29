@@ -47,7 +47,7 @@ def getall(modlist):
 def _import_a_class(fqcn):
     lastDot=fqcn.rfind('.')   
     if lastDot==0:
-        raise ValueError, "unable to import %s" %fqcn
+        raise ValueError("unable to import %s" %fqcn)
     if lastDot>0:
         modName=fqcn[:lastDot]
         className=fqcn[lastDot+1:]
@@ -55,9 +55,9 @@ def _import_a_class(fqcn):
             module=__import__(modName, globals(), locals(), [className])
             return getattr(module, className)
         except (ImportError, AttributeError):
-            raise ValueError, "impossible to import: %s" % fqcn
+            raise ValueError("impossible to import: %s" % fqcn)
     else:
-        raise ValueError, "impossible to import: %s" % fqcn
+        raise ValueError("impossible to import: %s" % fqcn)
 
 
 def string_to_obj(s, numframes=0):
@@ -135,9 +135,8 @@ def moduleize(module, kls, safe=True):
             # no problem
             return
         elif safe:
-            raise ValueError, \
-                  "name already in use in module: %s.%s)" \
-                  % (module.__name__, name)
+            raise ValueError( "name already in use in module: %s.%s)" \
+                  % (module.__name__, name))
     setattr(module, name, kls)
     kls.__module__=module.__name__
 

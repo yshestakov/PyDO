@@ -84,6 +84,8 @@ appropriate formats and accumulating the values inside the converter.
 
 
 __all__=['FIELD', 'CONSTANT', 'NULL', 'SET', 'SQLOperator', 'BindingConverter']
+import sys
+
 
 def sqlquote(s):
     for p1, p2 in (("'", "''"),
@@ -103,8 +105,12 @@ class CONSTANT(object):
         (self.name,)=state
     
     def __init__(self, name):
-        if not isinstance(name, basestring):
-            raise TypeError, "name must be a string"
+        if sys.version_info[0] == 2:
+            if not isinstance(name, basestring):
+                raise TypeError("name must be a string")
+        else:
+            if not isinstance(name, str):
+                raise TypeError("name must be a string")
         self.name=name
 
     def __repr__(self):
@@ -129,7 +135,7 @@ class SET(object):
     
     def __init__(self, *values):
         if not len(values):
-            raise ValueError, "you must supply some values"
+            raise ValueError("you must supply some values")
         self.values=tuple(values)
         self.converter=None
 
@@ -158,7 +164,7 @@ class SQLOperator(tuple):
     """A special kind of tuple that knows how to represent itself as a SQL string."""
     def __new__(cls, t, converter=None):
         if not (2 <= len(t)):
-            raise ValueError, "invalid SQL condition"
+            raise ValueError("invalid SQL condition")
         if not isinstance(t, SQLOperator):
             tl=[t[0]]
             for x in t[1:]:
@@ -218,18 +224,18 @@ class PolyadicOperator(SQLOperator):
         if kw:
             converter=kw.get('converter')
             if not converter:
-                raise ValueError, "converter is only keyword argument allowed"
+                raise ValueError("converter is only keyword argument allowed")
         else:
             converter=None
         return SQLOperator.__new__(cls, (cls.operator,)+values, converter)
     
     def __init__(self, *values, **kw):
         if not values:
-            raise ValueError, "some values required"
+            raise ValueError("some values required")
         if kw:
             converter=kw.get('converter')
             if not converter:
-                raise ValueError, "converter is only keyword argument allowed"
+                raise ValueError("converter is only keyword argument allowed")
         else:
             converter=None
         super(PolyadicOperator, self).__init__((self.__class__.operator,)+values, converter)
@@ -351,7 +357,7 @@ class BindingConverter(object):
 
     def _set_paramstyle(self, paramstyle):
         if paramstyle not in BindingConverter.supported_styles:
-            raise ValueError, "unsupported paramstyle: %s" % paramstyle
+            raise ValueError("unsupported paramstyle: %s" % paramstyle)
         self._paramstyle=paramstyle
         
     paramstyle=property(_get_paramstyle, _set_paramstyle)
