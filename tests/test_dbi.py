@@ -9,37 +9,36 @@ from pydo.utils import every
 from testingtesting import tag
 import config
 from fixture import base_fixture
-dbitags=config.ALLDRIVERS+['dbi']
+dbitags=list(config.ALLDRIVERS) + ['dbi']
 import pydo.dbi as D
 import pydo as P
 
 @tag(*dbitags)
 def test_initAlias1():
-    """ calls initAlias with bogus arguments.  Should succeed."""    
+    """ calls initAlias with bogus arguments.  Should succeed."""
     alias='pomposity'
     D.initAlias(alias, 'anything', 'anything', True, True)
     try:
-        assert D._aliases.has_key(alias)
+        assert alias in D._aliases
     finally:
         D.delAlias(alias)
-        assert not D._aliases.has_key(alias)
+        assert alias not in D._aliases
 
-@tag(*dbitags)    
+@tag(*dbitags)
 def test_initAlias2():
     """ calls initAlias twice with the same arguments.  Should succeed. """
     alias='fruitcake'
     driver='pong'
     connectArgs='blimp'
-    
+
     D.initAlias(alias, driver, connectArgs)
     try:
         try:
             D.initAlias(alias, driver, connectArgs)
         except ValueError:
-            raise ValueError, \
-                  "ValueError should not be raised when an alias is reinitialized"\
-                  " with identical data!"
-        
+            raise ValueError("ValueError should not be raised when an alias is reinitialized"\
+                  " with identical data!")
+
     finally:
         D.delAlias(alias)
 
@@ -97,7 +96,7 @@ def test_swapConnection1():
     assert conn1 is db.conn
 
 
-@tag(*dbitags)    
+@tag(*dbitags)
 def test_pool1():
     stuff=D._aliases['pydotest'].copy()
     D.initAlias('pydotestpool',
@@ -133,7 +132,7 @@ def test_pool2():
                 D.ConnectionPool(max_poolsize=0, keep_poolsize=4),
                 stuff['verbose'])
     hold=True
-    threads=[]    
+    threads=[]
     class mythread(threading.Thread):
         def run(self):
             mydb=D.getConnection('pydotestpool')
@@ -171,7 +170,7 @@ def test_autocommit1():
         assert db.autocommit
     else:
         assert not db.autocommit
-    
+
 
 class test_autocommit2(base_fixture):
     usetables=['C']
@@ -205,14 +204,14 @@ class test_autocommit2(base_fixture):
                 assert len(self.C.getSome(x=4000))==0
             else:
                 assert len(self.C.getSome(x=4000))==1
-                
+
         subtest(False)
         self.db.autocommit=True
         try:
             subtest(True)
         finally:
             self.db.autocommit=False
-    
+
 class test_describeTable1(base_fixture):
     tags=('dbi', 'psycopg',)
 
@@ -231,6 +230,6 @@ class test_describeTable1(base_fixture):
             guess_columns=True
         s=sorted(foo.getColumns())
         assert s==['id', 'name']
-             
-        
-    
+
+
+
