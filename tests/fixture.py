@@ -32,7 +32,7 @@ class Fixture(object):
            self.run ()
         finally:
            self.cleanup()
-            
+
 
 
 class base_fixture(Fixture):
@@ -56,11 +56,11 @@ class base_fixture(Fixture):
         id %(seqsql)s,
         x INTEGER
         )""",
-        
+
         C="""CREATE TABLE c (
         id %(seqsql)s,
         x INTEGER)""",
-        
+
         A_C="""CREATE TABLE a_c (
         a_id INTEGER NOT NULL,
         c_id INTEGER NOT NULL,
@@ -107,7 +107,7 @@ class base_fixture(Fixture):
 
     def post(self):
         pass
-    
+
     def setupObj(self, table, guess):
         if table=='A':
             class A(P.PyDO):
@@ -131,8 +131,8 @@ class base_fixture(Fixture):
 
                 def getC(self):
                     return self.joinTable('id', 'a_c', 'a_id', 'c_id', C, 'id')
-                
-                    
+
+
             self.A=A
         elif table=='B':
             class B(P.PyDO):
@@ -144,7 +144,7 @@ class base_fixture(Fixture):
                             'x')
                 def getA(self):
                     return A.getSome(b_id=self.id)
-                
+
             self.B=B
         elif table=='C':
             class C(P.PyDO):

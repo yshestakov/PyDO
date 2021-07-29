@@ -10,9 +10,9 @@ the moment.)
 from testingtesting import tag
 import config
 from fixture import base_fixture
-from cPickle import loads, dumps
+from pickle import loads, dumps
 
-alltags=config.ALLDRIVERS + ['operators']
+alltags=list(config.ALLDRIVERS) + ['operators']
 
 from pydo.operators import *
 import pydo as P
@@ -21,7 +21,7 @@ import pydo as P
 def test_AND1():
     assert str(AND(FIELD('x')))=='x'
 
-@tag(*alltags)               
+@tag(*alltags)
 def test_converter1():
     op=AND(FIELD('x'), EQ(FIELD('y'), 'fiddler\'s roof'))
     assert str(op)=="(x AND (y = 'fiddler''s roof'))"
@@ -56,4 +56,4 @@ def test_pickleconstant1():
     f=FIELD('ho')
     f2=loads(dumps(f))
     assert str(f)==str(f2)
-    
+

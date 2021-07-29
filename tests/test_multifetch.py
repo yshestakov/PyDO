@@ -6,13 +6,13 @@ tests for the pydo.multifetch module.
 """
 import pydo as P
 import config
-alltags=config.ALLDRIVERS+['fetch']
+alltags=list(config.ALLDRIVERS)+['fetch']
 from test_base import base_fixture
 
 class test_fetch1(base_fixture):
     alltables=['A', 'B', 'C', 'A_C']
     tags=alltags
-    
+
     def pre(self):
         A=self.A
         B=self.B
@@ -39,7 +39,7 @@ class test_fetch1(base_fixture):
               x=300,
               y=301,
               z=302)
-        
+
     def run(self):
         objs=[(self.A,'asparagus'), (self.B, 'bunko')]
         sql="""SELECT $COLUMNS FROM $TABLES
@@ -71,4 +71,4 @@ class test_fetch2(base_fixture):
         cobj, cnt=res[0]
         assert cobj.x==77
         assert int(cnt)==4
-        
+

@@ -3,6 +3,7 @@ if sys.version_info[0] == 2:
     import cPickle as pickle
 else:
     import pickle
+    RuntimeException=RuntimeError
 import os
 import tempfile
 import time
@@ -59,8 +60,8 @@ class GuessCache(object):
         os.rename(tmppath, path)
 
 
-__all__=['GuessCache']        
-        
-    
-    
+__all__=['GuessCache']
+
+
+
 
