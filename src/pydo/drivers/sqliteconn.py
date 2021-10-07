@@ -22,6 +22,7 @@ import datetime
 import sys
 if sys.version_info[0] == 3:
     long=int
+    basestring=str
     import sqlite3 as sqlite
 else:
     import sqlite

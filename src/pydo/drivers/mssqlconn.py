@@ -15,6 +15,7 @@ import sys
 
 if sys.version_info[0] == 3:
     long=int
+    basestring=str
 else:
     # do we actually need to import this, or is it optional? @@ TBD
     try:

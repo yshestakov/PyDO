@@ -96,7 +96,7 @@ def readCmdLine(args, usage=None):
         try:
             connectArgs=c[d]
         except:
-            print >> sys.stderr, "no config for driver: %s" % d
+            print("no config for driver: %s" % d, file=sys.stderr)
         else:
             connectArgs['driver']=d
             if opts.verbose is not None:
