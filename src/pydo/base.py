@@ -97,7 +97,7 @@ class _metapydo(type):
                 raise ValueError("incompatible declarations: guess_columns "
                                  "with explicit declaration of fields and/or unique")
             gfields, gunique=cls._getTableDescription()
-            namespace['fields']=gfields.values()
+            namespace['fields']=list(gfields.values())
             namespace['unique']=gunique
 
         # create Field objects declared locally in this class
@@ -179,10 +179,8 @@ class _metapydo(type):
                     # a field is also a descriptor
                     setattr(cls, name, cls._fields[name])
 
-class PyDO(dict):
+class PyDO(dict, metaclass=_metapydo):
     """ Base class for PyDO data classes."""
-
-    __metaclass__=_metapydo
 
     # subclasses may customize these
     guess_tablename=True
@@ -278,7 +276,7 @@ class PyDO(dict):
         s.sort()
         if kwargs:
             s.append('0')
-            s.append('_'.join(sorted('%s_%s' % x for x in kwargs.items())))
+            s.append('_'.join(sorted('%s_%s' % x for x in list(kwargs.items()))))
         t=tuple(s)
         if t in cls._projections:
             kls=cls._projections[t]
@@ -411,7 +409,7 @@ class PyDO(dict):
         if with_as:
             return [x.get_column_expression(qualifier) for x in cls._fields.values()]
         elif not qualifier:
-            return cls._fields.keys()
+            return list(cls._fields.keys())
         else:
             return ["%s.%s" % (qualifier, x) for x in cls._fields.keys()]
 
@@ -497,13 +495,13 @@ class PyDO(dict):
         conn = cls.getDBI()
 
         if not conn.auto_increment:
-            for s, sn in cls._sequenced.items():
+            for s, sn in list(cls._sequenced.items()):
                 if s not in fieldData:
                     fieldData[s] = conn.getSequence(sn, s, cls.getTable(True))
-        cols=fieldData.keys()
+        cols=list(fieldData.keys())
         vals=[fieldData[c] for c in cols]
         converter=conn.getConverter()
-        converted=map(converter, vals)
+        converted=list(map(converter, vals))
 
         sql = 'INSERT INTO %s (%s) VALUES  (%s)' \
               % (cls.getTable(),
@@ -514,7 +512,7 @@ class PyDO(dict):
             raise PyDOError("inserted %s rows instead of 1" % res)
 
         if conn.auto_increment:
-            for k, v in cls._sequenced.items():
+            for k, v in list(cls._sequenced.items()):
                 if k not in fieldData:
                     if v == True:
                         v = cls._sequence_for(k)
@@ -634,7 +632,7 @@ class PyDO(dict):
             # fields expressed as keyword arguments that aren't
             # declared in the class/projection.
             andValues=list(args)
-            for k, v in fieldData.items():
+            for k, v in list(fieldData.items()):
                 if v is None or v == NULL:
                     andValues.append(IS(FIELD(k), NULL))
                 else:
@@ -678,13 +676,13 @@ class PyDO(dict):
                 query.append(sql)
             else:
                 query.extend(['WHERE', sql])
-        if filter(None, (order, limit, offset)):
+        if [_f for _f in (order, limit, offset) if _f]:
             query.append(conn.orderByString(order, limit, offset))
         query=' '.join(query)
 
         results = conn.execute(query, values)
         if results and isinstance(results, (list, tuple)):
-            return map(cls, results)
+            return list(map(cls, results))
         else:
             return []
 
@@ -800,7 +798,7 @@ class PyDO(dict):
                                        offset)
         results = conn.execute(sql, vals)
         if results and isinstance(results, (list, tuple)):
-            return map(thatObject, results)
+            return list(map(thatObject, results))
         return []
 
     def _joinTableSQL(self,
@@ -853,7 +851,7 @@ class PyDO(dict):
         if wheresql:
             #sql.append(' AND (%s)' % wheresql)
             sql=' AND '.join(wheresql, sql)
-        if filter(None, (order, limit, offset)):
+        if [_f for _f in (order, limit, offset) if _f]:
             sql.append(conn.orderByString(order, limit, offset))
         return ''.join(sql), vals
 
@@ -943,7 +941,7 @@ class ForeignKey(object):
 
     def __get__(self, obj, type_):
         d=dict((x, obj[y]) for x, y in zip(self.that_side, self.this_side))
-        if not every(None, d.values()):
+        if not every(None, iter(d.values())):
             return self.kls.getUnique(**d)
 
     def __set__(self, obj, value):
@@ -973,7 +971,7 @@ def OneToMany(this_side, that_side, kls):
               "(length of %s) != %d (length of %s)" \
               % (len(this_side), str(this_side),
                  len(that_side), str(that_side)))
-    zipped=zip(that_side, this_side)
+    zipped=list(zip(that_side, this_side))
 
 
     def getMany(self, *args, **kwargs):
