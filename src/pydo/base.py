@@ -1,3 +1,4 @@
+# -*-python-*-
 from pydo.dbi import getConnection
 from pydo.field import Field
 from pydo.guesscache import GuessCache
@@ -17,11 +18,12 @@ from inspect import isfunction
 _group_pat=re.compile(r'\s*group ', re.I)
 _as_pat=re.compile(r'^(\w+)\s+as\s+(\w+)$', re.I)
 
+
 def _restrict(flds, coll):
     """private method for cleaning a set or dict of any items that aren't
     in a field list (or dict); needed for handling attribute inheritance
     for projections"""
-    
+
     # handle sets (_unique).  Sets may contain groupings of fieldnames
     # for multi-column unique constraints; this tests each member of
     # the grouping (sets, frozensets, lists, and tuples are tolerated)
@@ -33,7 +35,7 @@ def _restrict(flds, coll):
             if thing.asname in flds:
                 return True
         return False
-    
+
     if isinstance(coll, set):
         s=set()
         for v in coll:
@@ -55,7 +57,8 @@ def _restrict(flds, coll):
         return s
     # It isn't necessary to test for multi-column keys in dicts
     elif isinstance(coll, dict):
-        return dict((x, y) for x, y in coll.iteritems() if infld(x,flds))
+        return dict((x, y) for x, y in coll.items() if infld(x,flds))
+
 
 class _metapydo(type):
     """metaclass for _pydobase.
@@ -69,7 +72,7 @@ class _metapydo(type):
         if namespace.get('table') is not None:
             # table has been explicitly declared, so
             # turn off guess_tablename for subclasses
-            if not namespace.has_key('guess_tablename'):
+            if 'guess_tablename' not in namespace:
                 cls.guess_tablename=False
         elif cls.guess_tablename:
             # leave guess_tablename for subclasses
@@ -96,7 +99,7 @@ class _metapydo(type):
             gfields, gunique=cls._getTableDescription()
             namespace['fields']=gfields.values()
             namespace['unique']=gunique
-        
+
         # create Field objects declared locally in this class
         # and store them in a temporary dict
         fielddict={}
@@ -113,7 +116,7 @@ class _metapydo(type):
                     simplefields.add(asname)
                     f=cls._create_field(name=name, asname=asname)
                 else:
-                    simplefields.add(f)                
+                    simplefields.add(f)
                     f=cls._create_field(f)
             elif isinstance(f, dict):
                 f=cls._create_field(**f)
@@ -121,7 +124,7 @@ class _metapydo(type):
                 f=cls._create_field(*f)
             elif not isinstance(f, Field):
                 raise ValueError("cannot coerce into a field: %s" % f)
-                
+
             # add to field container
             fielddict[f.asname]=f
 
@@ -153,7 +156,7 @@ class _metapydo(type):
         # subclass as a simple field (just a fieldname), then the
         # previous field definition is inherited; otherwise, the
         # subclass's definition wins.  This is useful for projections.
-        updatefields=((x, y) for x, y in fielddict.iteritems() \
+        updatefields=((x, y) for x, y in fielddict.items() \
                       if not (x in cls._fields and x in simplefields))
         cls._fields.update(updatefields)
         uniqueset.update(_setize(x) for x in namespace.get('unique', ()))
@@ -161,7 +164,7 @@ class _metapydo(type):
         # We now have all the inherited declarations, and figure out
         # sequences and additional unique constraints.
         cls._sequenced={}
-        for f in cls._fields.itervalues():
+        for f in cls._fields.values():
             if f.sequence:
                 cls._sequenced[f.asname] = f.sequence
             if f.unique:
@@ -175,7 +178,7 @@ class _metapydo(type):
                 if not hasattr(cls, name):
                     # a field is also a descriptor
                     setattr(cls, name, cls._fields[name])
-        
+
 class PyDO(dict):
     """ Base class for PyDO data classes."""
 
@@ -193,17 +196,17 @@ class PyDO(dict):
     refetch=False
     guesscache=None
     _ignore_update_rowcount=False
-    
+
     ## not defined by default, but if you aren't using guess_columns
     ## you'll want to define it at some point in your class hierarchy
-    # fields 
+    # fields
 
     # private - don't touch
     _is_projection=False
 
     @classmethod
     def _getTableDescription(cls):
-        
+
         """ Supplies the table fields (as a dict of fieldnames to
         Field objects) and a list of multi-column unique constraints
         to the metaclass, which will call it when guessing columns.
@@ -211,7 +214,7 @@ class PyDO(dict):
         driver's describeTable() method, and performs no caching;
         otherwise, cls.guesscache is presumed to be something
         compatible a pydo.GuessCache, and it will be consulted and
-        populated. 
+        populated.
         """
         args = [cls.getTable(False), cls.schema]
         if cls.sequence_mapper:
@@ -224,7 +227,7 @@ class PyDO(dict):
             return data
         else:
             return cls.getDBI().describeTable(*args)
-    
+
     @staticmethod
     def _create_field(*args, **kwargs):
         """ controls how fields are created when declared in the field
@@ -232,7 +235,7 @@ class PyDO(dict):
         than a field instance.  By default, passes field declaration
         to the Field constructor.
         """
-        
+
         return Field(*args, **kwargs)
 
     @classmethod
@@ -240,7 +243,7 @@ class PyDO(dict):
         """returns the name of the table, qualified with the schema,
         if any, if withSchema is true.
         """
-       
+
         if cls.schema and withSchema:
             return '%s.%s' % (cls.schema, cls.table)
         else:
@@ -252,7 +255,7 @@ class PyDO(dict):
         # also accept passing in a list or tuple (backwards compatibility)
         if len(fields)==1 and isinstance(fields[0], (list, tuple)):
             fields=fields[0]
-            
+
         acceptable=frozenset(('mutable','module'))
         diff=frozenset(kwargs)-acceptable
         if diff:
@@ -275,9 +278,9 @@ class PyDO(dict):
         s.sort()
         if kwargs:
             s.append('0')
-            s.append('_'.join(sorted('%s_%s' % x for x in kwargs.items())))        
+            s.append('_'.join(sorted('%s_%s' % x for x in kwargs.items())))
         t=tuple(s)
-        if cls._projections.has_key(t):
+        if t in cls._projections:
             kls=cls._projections[t]
         else:
             klsname='projection_%s__%s' % (cls.__name__,
@@ -306,11 +309,11 @@ class PyDO(dict):
         self._update_raw(d)
         # if successful, modify the object's field data,
         # taking any wrapped values out of their wrappers
-        unwrapped=dict((k, unwrap(v)) for k,v in d.iteritems())
+        unwrapped=dict((k, unwrap(v)) for k,v in d.items())
         super(PyDO, self).update(unwrapped)
 
     def onUpdate(self, adict):
-        """a hook for subclasses to modify/validate updates; 
+        """a hook for subclasses to modify/validate updates;
         by default returns the original data unchanged."""
         return adict
 
@@ -325,7 +328,7 @@ class PyDO(dict):
 
         conn=self.getDBI()
         converter=conn.getConverter()
-        sqlbuff=["%s  = %s" % (x, converter(y)) for x, y in adict.iteritems()]
+        sqlbuff=["%s  = %s" % (x, converter(y)) for x, y in adict.items()]
         # pass in the same converter so that we don't get generated
         # interpolation names that clobber any others
         where, values=self._uniqueWhere(conn, self, converter)
@@ -335,10 +338,10 @@ class PyDO(dict):
         result=conn.execute(sql, values)
         # mysql will return 0 if the update was vacuous,
         # but that doesn't imply failure.  Postgresql and sqlite
-        # will return 1 in this case.  
+        # will return 1 in this case.
         if conn.has_sane_rowcount and result !=1:
             # hack/hook to enable updateable views to work that don't
-            # return a correct rowcount.  (This is probably unnecessary now 
+            # return a correct rowcount.  (This is probably unnecessary now
             # that we accept 0.)
             if self._ignore_update_rowcount:
                 pass
@@ -361,7 +364,7 @@ class PyDO(dict):
                  cls.getTable(),
                  " SET ",
                  ', '.join(["%s = %s" % (x, converter(y)) \
-                            for x, y in adict.iteritems()])]
+                            for x, y in adict.items()])]
         where, values=cls._processWhere(conn, args, fieldData, converter)
         if where:
             sqlbuff.extend([' WHERE ', where])
@@ -375,7 +378,7 @@ class PyDO(dict):
     def copy(self):
         """returns a copy of self"""
         return self.__class__(dict(self))
-    
+
     def clear(self):
         """not implemented for PyDO classes"""
         raise NotImplementedError("PyDO classes don't implement clear()")
@@ -391,7 +394,7 @@ class PyDO(dict):
     def setdefault(self, key, val):
         """not implemented for PyDO classes"""
         raise NotImplementedError("PyDO classes don't implement setdefault()")
-    
+
     @classmethod
     def getColumns(cls, qualifier=None, with_as=False):
         """Returns a list of all columns in this table, in no
@@ -401,16 +404,16 @@ class PyDO(dict):
         (i.e., table.column).  If you pass in a string to qualifier,
         it will be used as a table alias; otherwise the table name
         will be used.
-        
+
         """
         if qualifier and not isinstance(qualifier, basestring):
             qualifier=cls.getTable()
         if with_as:
-            return [x.get_column_expression(qualifier) for x in cls._fields.itervalues()]
+            return [x.get_column_expression(qualifier) for x in cls._fields.values()]
         elif not qualifier:
             return cls._fields.keys()
         else:
-            return ["%s.%s" % (qualifier, x) for x in cls._fields.iterkeys()]
+            return ["%s.%s" % (qualifier, x) for x in cls._fields.keys()]
 
     @classmethod
     def getFields(cls):
@@ -490,18 +493,18 @@ class PyDO(dict):
             raise ValueError("cannot refetch without a unique index!")
         # sanity check the field data
         cls._validateFields(fieldData)
-        
+
         conn = cls.getDBI()
 
         if not conn.auto_increment:
             for s, sn in cls._sequenced.items():
-                if not fieldData.has_key(s):
+                if s not in fieldData:
                     fieldData[s] = conn.getSequence(sn, s, cls.getTable(True))
         cols=fieldData.keys()
         vals=[fieldData[c] for c in cols]
         converter=conn.getConverter()
         converted=map(converter, vals)
-        
+
         sql = 'INSERT INTO %s (%s) VALUES  (%s)' \
               % (cls.getTable(),
                  ', '.join(cols),
@@ -509,15 +512,15 @@ class PyDO(dict):
         res = conn.execute(sql, converter.values)
         if res != 1:
             raise PyDOError("inserted %s rows instead of 1" % res)
-        
+
         if conn.auto_increment:
             for k, v in cls._sequenced.items():
-                if not fieldData.has_key(k):
+                if k not in fieldData:
                     if v == True:
                         v = cls._sequence_for(k)
                     fieldData[k] = conn.getAutoIncrement(v)
         # unwrap any wrapped values in fieldData
-        fieldData=dict((k, unwrap(v)) for k,v in fieldData.iteritems())
+        fieldData=dict((k, unwrap(v)) for k,v in fieldData.items())
         if not refetch:
             # add None for any missing columns
             for c in cls.getColumns():
@@ -530,7 +533,7 @@ class PyDO(dict):
         mapper = cls.sequence_mapper or getattr(cls.getDBI(), 'sequence_mapper', None)
         if mapper:
             return mapper(cls.table, field)
-        
+
     @classmethod
     def _matchUnique(cls, kw):
         """return a tuple of column names that will uniquely identify
@@ -539,11 +542,11 @@ class PyDO(dict):
         ulist=[]
         for unique in cls._unique:
             if isinstance(unique, basestring):
-                if kw.has_key(unique): 
+                if unique in kw:
                     ulist.append(unique)
             elif isinstance(unique, (frozenset,list,tuple)):
                 for u in unique:
-                    if not kw.has_key(u):
+                    if u not in kw:
                         break
                 else:
                     ulist.extend(list(unique))
@@ -561,9 +564,9 @@ class PyDO(dict):
         for u in unique:
             if kw[u] in (None, NULL):
                 raise ValueError("NULL value encountered for field declared unique: %s" % u)
-            
+
         if converter is None:
-            converter=conn.getConverter()        
+            converter=conn.getConverter()
         if len(unique)==1:
             u=tuple(unique)[0]
             sql=str(EQ(FIELD(u), kw[u], converter=converter))
@@ -571,11 +574,11 @@ class PyDO(dict):
             sql=str(AND(converter=converter, *[EQ(FIELD(u), kw[u]) for u in unique]))
         return sql, converter.values
 
-    
+
     @classmethod
     def getUnique(cls, **fieldData):
         """ Retrieve one particular instance of this class.
-        
+
         Given the attribute/value pairs in fieldData, retrieve a unique row
         and return a data class instance representing said row or None
         if no row was retrieved.
@@ -590,7 +593,7 @@ class PyDO(dict):
         if len(results) > 1:
             raise PyDOError('got more than one row on unique query!')
         if results:
-            return cls(results[0]) 
+            return cls(results[0])
 
     @classmethod
     def _baseSelect(cls, qualified=False):
@@ -628,14 +631,14 @@ class PyDO(dict):
                         values=list(origVals)+list(values)
         else:
             # N.B. -- we don't call _validateFields here, as we permit
-            # fields expressed as keyword arguments that aren't 
+            # fields expressed as keyword arguments that aren't
             # declared in the class/projection.
             andValues=list(args)
             for k, v in fieldData.items():
                 if v is None or v == NULL:
                     andValues.append(IS(FIELD(k), NULL))
                 else:
-                    andValues.append(EQ(FIELD(k), v)) 
+                    andValues.append(EQ(FIELD(k), v))
             andlen=len(andValues)
             if converter is None:
                 converter=conn.getConverter()
@@ -661,12 +664,12 @@ class PyDO(dict):
 
         If you use SQL directly and pass variables, it is up to
         you to use the same paramstyle as the underlying driver.
-        
+
         """
         order=fieldData.pop('order', None)
         limit=fieldData.pop('limit', None)
         offset=fieldData.pop('offset', None)
-        
+
         conn=cls.getDBI()
         sql, values=cls._processWhere(conn, args, fieldData)
         query=[cls._baseSelect()]
@@ -721,7 +724,7 @@ class PyDO(dict):
         # if the class has unique constraints, and all data
         # is presented, there will be something returned from
         # unique unless someone is doing bad things to the
-        # object 
+        # object
         assert unique
         sql = 'DELETE FROM %s WHERE %s' % (self.getTable(), unique)
         conn.execute(sql, values)
@@ -751,12 +754,12 @@ class PyDO(dict):
                   **extra):
 
         """Handles many to many relations.  In short, do:
-        
+
         SELECT thatObject.getColumns(1)
         FROM thatObject.table, pivotTable
         WHERE pivotTable.thisSideColumn = self.myAttrName
         AND pivotTable.thatSideColumn = thatObject.table.thatAttrName
-        
+
         and return a list of thatObjects representing the resulting
         rows.  The parameters which accept column names
         (thisAttrNames, thisSideColumns, thatSideColumns,
@@ -771,7 +774,7 @@ class PyDO(dict):
         and "offset" keyword arguments, using SQLOperators or
         (sql-string, bind values) as positional arguments, and by
         specifying columns by keyword argument.
-        
+
         """
         extraTables=extra.pop('extraTables', None)
         if extraTables:
@@ -822,19 +825,19 @@ class PyDO(dict):
         thisSideColumns = _tupleize(thisSideColumns)
         thatSideColumns = _tupleize(thatSideColumns)
         thatAttrNames = _tupleize(thatAttrNames)
-        
+
         if len(thisSideColumns) != len(thisAttrNames):
             raise ValueError('thisSideColumns and thisAttrNames must '
                              'contain the same number of elements')
         if len(thatSideColumns) != len(thatAttrNames):
             raise ValueError('thatSideColumns and thatAttrNames must '
                              'contain the same number of elements')
-        
+
         sql=[thatObject._baseSelect(True),
              ', ',
              ', '.join([pivotTable]+extraTables),
              ' WHERE ']
-        
+
         joins = []
         for attr, col in zip(thisAttrNames, thisSideColumns):
             lit=converter(self[attr])
@@ -851,7 +854,7 @@ class PyDO(dict):
             #sql.append(' AND (%s)' % wheresql)
             sql=' AND '.join(wheresql, sql)
         if filter(None, (order, limit, offset)):
-            sql.append(conn.orderByString(order, limit, offset))                
+            sql.append(conn.orderByString(order, limit, offset))
         return ''.join(sql), vals
 
 def autoschema(alias, schema=None, guesscache=True, module=None, sequence_mapper=None):
@@ -863,7 +866,7 @@ def autoschema(alias, schema=None, guesscache=True, module=None, sequence_mapper
 
     The PyDO objects created are extremely bare, but may be enough for
     quick scripts.   If you want to pickle them, pass in a module
-    for them to live in for the "module" parameter.  
+    for them to live in for the "module" parameter.
     """
     ns={}
     db=getConnection(alias)
@@ -901,7 +904,7 @@ class ForeignKey(object):
     a=A.getUnique(id=1)
     a.B # returns B.getUnique(id=a.b_fkey)
     a.C # returns C.getUnique(key1=a.c_fkey1, key2=a.c_fkey2)
-    a.C=my_C_instance # updates a with new values for c_fkey1 and c_fkey2 
+    a.C=my_C_instance # updates a with new values for c_fkey1 and c_fkey2
     a.B=None # equivalent to a.b_fkey=None
 
     """
@@ -926,7 +929,7 @@ class ForeignKey(object):
                   "(length of %s) != %d (length of %s)" \
                   % (len(this_side), str(this_side),
                      len(that_side), str(that_side)))
-        self.this_side=this_side            
+        self.this_side=this_side
         self.that_side=that_side
         self._kls=kls
 
@@ -940,7 +943,7 @@ class ForeignKey(object):
 
     def __get__(self, obj, type_):
         d=dict((x, obj[y]) for x, y in zip(self.that_side, self.this_side))
-        if not every(None, d.itervalues()):
+        if not every(None, d.values()):
             return self.kls.getUnique(**d)
 
     def __set__(self, obj, value):
@@ -1000,7 +1003,7 @@ def OneToMany(this_side, that_side, kls):
                 newargs=(sql,)+values
             del converter
             return realkls.getSome(*newargs)
-        
+
         else:
             return realkls.getSome(*(tuple(eq)+args), **kwargs)
     return getMany
@@ -1023,13 +1026,13 @@ def ManyToMany(this_side,
                               this_pivot_side,
                               that_pivot_side,
                               realkls,
-                              that_side,                              
+                              that_side,
                               *args,
                               **kwargs)
     return getMany
-                              
-        
-        
+
+
+
 
 
 __all__=['PyDO', 'autoschema', 'ForeignKey', 'OneToMany', 'ManyToMany']

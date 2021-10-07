@@ -19,8 +19,11 @@ from pydo.operators import BindingConverter
 
 import time
 import datetime
-
-import sqlite
+import sys
+if sys.version_info[0] == 3:
+    import sqlite3 as sqlite
+else:
+    import sqlite
 # currently required for this version of pysqlite
 import mx.DateTime
 

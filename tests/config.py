@@ -13,6 +13,14 @@ import traceback
 from pydo.dbi import initAlias, _driverConfig
 from testingtesting import _defaultNamePat
 
+# https://stackoverflow.com/questions/436198/what-is-an-alternative-to-execfile-in-python-3
+def _execfile(cmd, g, l):
+    print("_execfile(%r, %r, %r)" % (cmd, g, l))
+    exec(open(cmd).read(), g, l)
+if sys.version_info[0] == 3:
+    execfile=_execfile
+
+
 DEFAULT_CONFIG='~/.pydotestrc'
 
 ALLDRIVERS=_driverConfig.keys()
@@ -74,7 +82,7 @@ def readCmdLine(args, usage=None):
         tags=set()
     else:
         tags=set(opts.tags.split())
-    possdrivers=set(ALLDRIVERS)        
+    possdrivers=set(ALLDRIVERS)
     if not opts.drivers:
         drivers=possdrivers
     else:
@@ -105,7 +113,7 @@ def readCmdLine(args, usage=None):
         except re.error:
             parser.error("error: invalid regular expression: %s" % opts.pattern)
     else:
-        pat=_defaultNamePat    
+        pat=_defaultNamePat
 
     return retdrivers, tags, pat, opts.unittest
 

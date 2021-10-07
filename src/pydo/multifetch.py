@@ -45,7 +45,7 @@ def _processResultSpec(resultSpec):
                     raise ValueError("unknown class")
             elif not isinstance(i, (TableAlias, basestring)):
                 raise ValueError("table alias or string expression: %s" % i)
-            yield i            
+            yield i
 
 def iterfetch(resultSpec, sqlTemplate, *values, **kwargs):
     """
@@ -56,7 +56,7 @@ def iterfetch(resultSpec, sqlTemplate, *values, **kwargs):
     resultSpec is a list that may contain:
 
       * PyDO classes;
-      
+
       * 2-tuples of (PyDO class, alias string), which indicate that
         the table represented by the PyDO class is to be referenced by
         the given alias;
@@ -86,7 +86,7 @@ def iterfetch(resultSpec, sqlTemplate, *values, **kwargs):
     null constraint), None.  If E is a string, F will be whatever the
     cursor returned for that column.
     """
-    
+
     resultSpec=list(_processResultSpec(resultSpec))
     objs=[x for x in resultSpec if not isinstance(x, basestring)]
     # check that all objs have the same connectionAlias
@@ -95,7 +95,7 @@ def iterfetch(resultSpec, sqlTemplate, *values, **kwargs):
         raise ValueError("objects passed to fetch must have same connection alias")
     elif len(caliases)==0:
         raise ValueError("must supply some object in result spec")
-    dbi=objs[0].getDBI()    
+    dbi=objs[0].getDBI()
 
     tables = ', '.join(x.getTable() for x in objs)
     # if an item has no uniqueness constraints, it really could
@@ -143,7 +143,7 @@ def iterfetch(resultSpec, sqlTemplate, *values, **kwargs):
                     d[_strip_tablename(col)]=row[p]
                     p+=1
                 if o in noneable:
-                    for v in d.itervalues():
+                    for v in d.values():
                         if v is not None:
                             notnull=True
                             break

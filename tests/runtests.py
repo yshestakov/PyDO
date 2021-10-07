@@ -27,7 +27,7 @@ if __name__=='__main__':
     drivers, tags, pat, use_unit=config.readCmdLine(sys.argv[1:])
     res=0
     import runtests
-    for d, connectArgs in drivers.iteritems():
+    for d, connectArgs in drivers.items():
         initAlias(**connectArgs)
         curtags=list(tags)+[d]
         if tags:
