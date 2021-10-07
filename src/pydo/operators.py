@@ -95,6 +95,12 @@ def sqlquote(s):
         s=s.replace(p1, p2)
     return "'%s'" % s
 
+# forward declarations to make pyflakes happy?
+AND=None
+OR=None
+ISNULL=None
+NOTNULL=None
+
 
 class CONSTANT(object):
     """a way to represent a constant or field name in a sql expression"""

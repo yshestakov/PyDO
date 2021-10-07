@@ -6,6 +6,8 @@ import string
 import sys
 if sys.version_info[0] == 2:
     from itertools import izip as zip
+else:
+    basestring=str
 
 class TableAlias(object):
     def __init__(self, obj, alias):

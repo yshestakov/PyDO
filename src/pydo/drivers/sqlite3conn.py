@@ -43,10 +43,10 @@ class Sqlite3DBI(DBIBase):
 
    def _execute_hook(self, cursor, sql, values, qualified):
       self._lastrowid=cursor.lastrowid
-   
+
    def getAutoIncrement(self, name):
       return self._lastrowid
-   
+
    def listTables(self, schema=None):
       """list the tables in the database schema.
       The schema parameter is not supported by this driver.
@@ -65,7 +65,7 @@ class Sqlite3DBI(DBIBase):
    def describeTable(self, table, schema=None):
       if schema is not None:
          raise ValueError("db schemas not supported by sqlite driver")
-      
+
       fields={}
       unique=set()
 
@@ -78,7 +78,7 @@ class Sqlite3DBI(DBIBase):
             c.execute(sql)
       else:
          execute=c.execute
-      
+
       sql="pragma table_info('%s')" % table
       execute(sql)
       res=c.fetchall()
@@ -96,7 +96,7 @@ class Sqlite3DBI(DBIBase):
             fields[name]=Field(name)
          if not int(notnull):
             nullable.append(name)
-            
+
       # get indexes
       sql="pragma index_list('%s')" % table
       execute(sql)
