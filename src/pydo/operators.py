@@ -168,7 +168,19 @@ class SET(object):
             return "(%s)" % self._convert(self.values[0])
 
 
-class SQLOperator(tuple):
+class  SQLtuple(tuple):
+    def __init__(self, seq=()):  # known special case of tuple.__init__
+        """
+        tuple() -> empty tuple
+        tuple(iterable) -> tuple initialized from iterable's items
+
+        If the argument is a tuple, the return value is the same object.
+        # (copied from class doc)
+        """
+        t=seq
+
+
+class SQLOperator(SQLtuple):
     """A special kind of tuple that knows how to represent itself as a SQL string."""
     def __new__(cls, t, converter=None):
         if not (2 <= len(t)):
@@ -186,7 +198,7 @@ class SQLOperator(tuple):
         return tuple.__new__(cls, t)
 
     def __init__(self, t, converter=None):
-        super(SQLOperator, self).__init__()
+        super(SQLOperator, self).__init__(t)
         # is this being done twice?
         self.setConverter(converter)
 
@@ -294,7 +306,7 @@ def __makeOperators():
             klname, sym=specs
             temp_classes[klname]=type(klname, (base,), dict(operator=sym))
     globals().update(temp_classes)
-    __all__.extend(temp_classes.keys())
+    __all__.extend(list(temp_classes.keys()))
     #commit suicide
     global __makeOperators
     del __makeOperators

@@ -173,7 +173,7 @@ class DBIBase(object):
             offset="OFFSET %s" % offset
         else:
             offset=""
-        return " ".join(filter(None, (order, limit, offset)))
+        return " ".join([_f for _f in (order, limit, offset) if _f])
 
 
     def getSequence(self, name, field, table):

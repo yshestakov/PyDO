@@ -111,6 +111,6 @@ class MysqlDBI(DBIBase):
             indices.setdefault(keyname, [])
             indices[keyname].append(colname)
 
-        unique=set(frozenset(x) for x in indices.values())
+        unique=set(frozenset(x) for x in list(indices.values()))
         return fields, unique
 
