@@ -3,3 +3,4 @@ __pycache__/*
 build/*
 dist/*
 .cache/*
+src/PyDO.egg-info/PKG-INFO
