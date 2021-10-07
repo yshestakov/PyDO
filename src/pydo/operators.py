@@ -79,12 +79,14 @@ appropriate formats and accumulating the values inside the converter.
   (((x = y) OR (a <= (b * (c ^ :n1)))) AND (e IN (:n2, :n3, :n4)))
   >>> c.values
   {'n1': 2, 'n2': 'Porthos', 'n3': 'Athos', 'n4': 'Aramis'}
-  
+
 """
 
 
 __all__=['FIELD', 'CONSTANT', 'NULL', 'SET', 'SQLOperator', 'BindingConverter']
 import sys
+if sys.version_info[0] == 3:
+    basestring=str
 
 
 def sqlquote(s):
@@ -92,6 +94,12 @@ def sqlquote(s):
                    ('\\', '\\\\')):
         s=s.replace(p1, p2)
     return "'%s'" % s
+
+# forward declarations to make pyflakes happy?
+AND=None
+OR=None
+ISNULL=None
+NOTNULL=None
 
 
 class CONSTANT(object):
@@ -103,7 +111,7 @@ class CONSTANT(object):
         return (self.name,)
     def __setstate__(self, state):
         (self.name,)=state
-    
+
     def __init__(self, name):
         if sys.version_info[0] == 2:
             if not isinstance(name, basestring):
@@ -116,12 +124,12 @@ class CONSTANT(object):
     def __repr__(self):
         return self.name
 
-NULL=CONSTANT('NULL')    
+NULL=CONSTANT('NULL')
 FIELD=CONSTANT
 
 class SET(object):
     """a way of passing a set into PyDO where clauses (for IN), e.g.:
-    
+
     >>> IN(FIELD('foo'), SET('spam', 'eggs', 'nougat'))
     (foo IN ('spam', 'eggs', 'nougat'))
     """
@@ -132,7 +140,7 @@ class SET(object):
 
     def __setstate__(self, state):
         self.values, self.converter=state
-    
+
     def __init__(self, *values):
         if not len(values):
             raise ValueError("you must supply some values")
@@ -151,7 +159,7 @@ class SET(object):
         if isinstance(val, basestring):
             return sqlquote(val)
         return repr(val)
-        
+
     def __repr__(self):
         l=len(self.values)
         if l>1:
@@ -178,7 +186,7 @@ class SQLOperator(tuple):
         return tuple.__new__(cls, t)
 
     def __init__(self, t, converter=None):
-        super(SQLOperator, self).__init__(t)
+        super(SQLOperator, self).__init__()
         # is this being done twice?
         self.setConverter(converter)
 
@@ -192,12 +200,12 @@ class SQLOperator(tuple):
         if self.converter:
             return self.converter(val)
         if isinstance(val, basestring):
-            return sqlquote(val)        
+            return sqlquote(val)
         return repr(val)
 
     def _repr_single(self):
         return '(%s %s)' % (self[0], self._convert(self[1]))
-    
+
     def __repr__(self):
         op=" %s " % self[0]
         if len(self)==2:
@@ -211,11 +219,11 @@ class MonadicOperator(SQLOperator):
         return SQLOperator.__new__(cls, (cls.operator, val), converter)
     def __init__(self, val, converter=None):
         super(MonadicOperator, self).__init__((self.__class__.operator, val), converter)
-        
+
 class DyadicOperator(SQLOperator):
     def __new__(cls, lval, rval, converter=None):
         return SQLOperator.__new__(cls, (cls.operator, lval, rval), converter)
-            
+
     def __init__(self, lval, rval, converter=None):
         super(DyadicOperator, self).__init__((self.__class__.operator, lval, rval), converter)
 
@@ -228,7 +236,7 @@ class PolyadicOperator(SQLOperator):
         else:
             converter=None
         return SQLOperator.__new__(cls, (cls.operator,)+values, converter)
-    
+
     def __init__(self, *values, **kw):
         if not values:
             raise ValueError("some values required")
@@ -324,7 +332,7 @@ __all__.append("BETWEEN")
 
 class BindingConverter(object):
     """A value converter that uses bind variables.
-    
+
     >>> op=EQ(FIELD('x'), 45, converter=BindingConverter('format'))
     >>> print op
     (x = %s)
@@ -359,7 +367,7 @@ class BindingConverter(object):
         if paramstyle not in BindingConverter.supported_styles:
             raise ValueError("unsupported paramstyle: %s" % paramstyle)
         self._paramstyle=paramstyle
-        
+
     paramstyle=property(_get_paramstyle, _set_paramstyle)
 
     def values():
@@ -396,7 +404,7 @@ class BindingConverter(object):
             return 'NULL'
         if isinstance(val, (CONSTANT, SET, SQLOperator)):
             return repr(val)
-        val=self.convert(val)        
+        val=self.convert(val)
         if self.paramstyle=='format':
             self._values.append(val)
             return '%s'

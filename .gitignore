@@ -1,0 +1,6 @@
+*.pyc
+__pycache__/*
+build/*
+dist/*
+.cache/*
+src/PyDO.egg-info/PKG-INFO

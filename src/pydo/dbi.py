@@ -26,11 +26,11 @@ class DBIBase(object):
     """
     paramstyle='format'
     # default to postgresql style for sequences,
-    # out of sheer postgresql bigotry. 
+    # out of sheer postgresql bigotry.
     auto_increment=False
     # should we pay attention to rowcount by default?
     has_sane_rowcount=True
-    
+
     def __init__(self,
                  connectArgs,
                  connectFunc,
@@ -47,7 +47,7 @@ class DBIBase(object):
         * verbose is whether or not to log the sql being executed.
         """
         self.connectArgs=connectArgs
-        self.connectFunc=connectFunc        
+        self.connectFunc=connectFunc
         self.pool=pool
         self.verbose=verbose
         self.initFunc=initFunc
@@ -55,7 +55,7 @@ class DBIBase(object):
         self.dbapiModule=dbapiModule
         self._initExceptions()
 
-    
+
     def _initExceptions(self):
         self.exceptions=dict((e, getattr(self.dbapiModule, e)) for e in exception_names)
 
@@ -76,7 +76,7 @@ class DBIBase(object):
             c=self._local.connection
             del self._local.connection
             c.close()
-            
+
         return fget, fset, fdel, "the underlying db connection"
     conn=property(*conn())
 
@@ -90,7 +90,7 @@ class DBIBase(object):
         """ disassociate from the current connection, which may be
         deleted or returned to a pool."""
         del self.conn
-        
+
     def commit(self):
         """commits a transaction"""
         self.conn.commit()
@@ -143,7 +143,7 @@ class DBIBase(object):
         #    # release connection
         #    del self.conn
         return res
-    
+
     @staticmethod
     def _convertResultSet(description, resultset, qualified=False):
         """internal function that turns a result set into a list of dictionaries."""
@@ -209,7 +209,7 @@ _driverConfig = {
     'sqlite3':     'pydo.drivers.sqliteconn2.SqliteDBI',
     'mssql' :      'pydo.drivers.mssqlconn.MssqlDBI',
     'oracle' :     'pydo.drivers.oracleconn.OracleDBI'
-    
+
     # more to come!
     }
 _loadedDrivers = {}
@@ -235,16 +235,16 @@ def _connect(driver, connectArgs, pool=None, verbose=False, initFunc=None):
 
 
 def _get_driver_class(name):
-    if not _loadedDrivers.has_key(name):
+    if name not in _loadedDrivers:
         fqcn = _driverConfig[name]
         cls=_import_a_class(fqcn)
         _loadedDrivers[name] = cls
         return cls
     return _loadedDrivers[name]
-             
+
 def initAlias(alias, driver, connectArgs, pool=None, verbose=False, init=None):
     """initializes a connection alias with the stated connection arguments.
-    
+
     It can cause confusion to let this be called repeatedly; you might
     think you are initializing it one way and not realize it is being
     initialized elsewhere differently.  Therefore, this raises a
@@ -254,7 +254,7 @@ def initAlias(alias, driver, connectArgs, pool=None, verbose=False, init=None):
 
     If you need to change the connect values at runtime, call delAlias
     before initAlias.
-    
+
     """
     if isinstance(init, basestring):
         sql=init
@@ -275,7 +275,7 @@ def initAlias(alias, driver, connectArgs, pool=None, verbose=False, init=None):
     elif init and not callable(init):
         raise ValueError("init must be either None, a string, "
                          "or callable, got %s" % type(init))
-        
+
     data=dict(driver=driver,
               connectArgs=connectArgs,
               pool=pool,
@@ -301,7 +301,7 @@ def delAlias(alias):
     does nothing otherwise"""
     _connlock.acquire()
     try:
-        if _aliases.has_key(alias):
+        if alias in _aliases:
             del _aliases[alias]
     finally:
         _connlock.release()
@@ -314,7 +314,7 @@ def getConnection(alias, create=True):
             conndata=_aliases[alias]
         except KeyError:
             raise ValueError("alias %s not recognized" % alias)
-        if not conndata.has_key('connection'):
+        if 'connection' not in conndata:
             if not create:
                 return None
             res=_connect(**conndata)
@@ -329,14 +329,14 @@ class ConnectionWrapper(object):
     a real db connection.  It delegates to the real connection, but
     overrides close(), which instead of closing the connection,
     returns the it to the pool.  """
-    
+
     __slots__=('_conn', '_pool', '_closed')
-    
+
     def __init__(self, conn, pool):
         self._conn=conn
         self._pool=pool
         self._closed=0
-        
+
     def __getattr__(self, attr):
         return getattr(self._conn, attr)
 
@@ -389,8 +389,8 @@ class ConnectionPool(object):
     def _connect(self, connectFunc, connectArgs, initFunc, retries):
         """internal method; don't call it"""
         max_poolsize=self._max_poolsize
-            
-        self._lock.acquire()            
+
+        self._lock.acquire()
         try:
             # is there a connection available?
             free=self._free
@@ -434,7 +434,7 @@ class ConnectionPool(object):
                 # we're going to block, encourage c to die first
                 del c
         # wait and then retry
-        time.sleep(self._delay)             
+        time.sleep(self._delay)
         return self._connect(connectFunc, connectArgs, initFunc, retries-1)
 
     def release(self, conn):
@@ -464,7 +464,7 @@ class ConnectionPool(object):
             # seems bogus to me...
             pass
 
-        
+
 
     def onHandOut(self, realConn):
         """any test you want to perform on a cached (i.e., not newly
@@ -475,7 +475,7 @@ class ConnectionPool(object):
         if hasattr(realConn, 'open'):
             return realConn.open
         return 1
-        
+
 
 
 __all__=['initAlias',

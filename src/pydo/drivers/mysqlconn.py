@@ -11,6 +11,10 @@ from pydo.field import Field, Unique, Sequence
 from pydo.log import debug
 
 import MySQLdb
+import sys
+
+if sys.version_info[0] == 3:
+    long=int
 
 class MysqlConverter(BindingConverter):
     converters={DATE: lambda x: x.value,

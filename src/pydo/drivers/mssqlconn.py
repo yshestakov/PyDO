@@ -11,9 +11,18 @@ from pydo.operators import BindingConverter
 
 import time
 import datetime
+import sys
 
-# do we actually need to import this, or is it optional? @@ TBD
-import mx.DateTime
+if sys.version_info[0] == 3:
+    long=int
+    basestring=str
+else:
+    # do we actually need to import this, or is it optional? @@ TBD
+    try:
+        import mx.DateTime
+    except ImportError:
+        print("Unable to import outdated mx.DateTime")
+        pass
 
 import adodbapi
 

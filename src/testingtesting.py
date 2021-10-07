@@ -20,7 +20,7 @@ def _testsForModule(m, namePat, tags):
     return _testsForNamespace(vars(m), namePat, tags)
 
 def _testsForNamespace(ns, namePat, tags):
-    for name, value in sorted(ns.iteritems()):
+    for name, value in sorted(ns.items()):
         if callable(value) and namePat.search(name):
             ftags=getattr(value, 'tags', None)
             if not ftags:
@@ -28,14 +28,15 @@ def _testsForNamespace(ns, namePat, tags):
             else:
                 if set(tags).issubset(ftags):
                     yield value
-            
+
 def runtests(tests, with_unittest=False):
     if with_unittest:
         return runtests_with_unittest(tests)
     success=[]
     fail=[]
     for i, t in enumerate(tests):
-        if type(t)==types.TypeType:
+        # FIXME if type(t)==types.TypeType:
+        if type(t)==types.CodeType:
             name=t.__name__
             t=t()
             if not callable(t):
@@ -93,9 +94,9 @@ def tag(*tags):
     return wrapper
 
 
-__all__=['runModule', 'runNamespace', 'info', 'tag']    
+__all__=['runModule', 'runNamespace', 'info', 'tag']
 
-@tag('choo')    
+@tag('choo')
 def test_anything():
     assert 1==1
 
@@ -135,6 +136,6 @@ if __name__=='__main__':
         pat=_defaultNamePat
     res=runNamespace(tags, namePat=pat)
     sys.exit(res)
-    
-    
-    
+
+
+

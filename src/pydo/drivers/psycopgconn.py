@@ -16,6 +16,11 @@ from pydo.field import Field
 
 import time
 import datetime
+import sys
+
+if sys.version_info[0] == 3:
+    long=int
+    basestring=str
 
 try:
     import psycopg2 as psycopg

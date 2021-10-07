@@ -19,10 +19,19 @@ from pydo.operators import BindingConverter
 
 import time
 import datetime
-
-import sqlite
-# currently required for this version of pysqlite
-import mx.DateTime
+import sys
+if sys.version_info[0] == 3:
+    long=int
+    basestring=str
+    import sqlite3 as sqlite
+else:
+    import sqlite
+    try:
+        # currently required for this version of pysqlite
+        import mx.DateTime
+    except ImportError:
+        print("Unable to import outdated mx.DateTime")
+        pass
 
 
 def convert_DATE(dt):

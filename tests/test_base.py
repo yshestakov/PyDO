@@ -19,7 +19,7 @@ def ranwords(num, length=9):
     return s
 
 
-alltags=config.ALLDRIVERS + ['base']
+alltags=list(config.ALLDRIVERS) + ['base']
 
 
 @tag(*alltags)
@@ -39,8 +39,9 @@ def test_inheritance1():
               'bar',
               'foople',
               'pinko'))
+    print(repr(ripple))
     assert set(ripple.getColumns())==cols
-    uniq=frozenset(map(frozenset, (('id',), ('title',))))
+    uniq=frozenset(list(map(frozenset, (('id',), ('title',)))))
     assert ripple.getUniquenessConstraints()==uniq
     assert ripple.getSequences()==dict(id=True)
 
@@ -49,7 +50,7 @@ def test_inheritance1():
 def test_inheritance2():
     FIELDS1=('nincompoop', P.Unique('id'))
     FIELDS2=('imbecile', 'id')
-    
+
     class foo(object):
         fields=FIELDS1
 
@@ -82,7 +83,7 @@ def test_inheritance2():
     assert phoo2.fields==FIELDS2
     assert not phoo2.getUniquenessConstraints(), "phoo2 shouldn't have a unique key"
 
-    
+
 
 @tag(*alltags)
 def test_unique1():
@@ -101,7 +102,7 @@ class test_unique2(base_fixture):
     def pre(self):
         for i in range(20):
             self.D.new(id=i, x=100)
-        
+
 
     def run(self):
         assert self.D.getUnique(id=15).x==100
@@ -143,8 +144,8 @@ class test_unique4(base_fixture):
         res=self.A.getUnique(id=self.tmpid, name='froggie')
         assert res is None
 
-        
-@tag(*alltags)        
+
+@tag(*alltags)
 def test_project1():
     class torte(P.PyDO):
         fields=(P.Sequence('id'),
@@ -324,9 +325,9 @@ def test_guess_tablename1():
     assert B.table=='b'
     assert C.table=='donut'
     assert D.table=='donut'
-        
-    
-@tag('sqlite', 'mysql', 'psycopg', 'base')        
+
+
+@tag('sqlite', 'mysql', 'psycopg', 'base')
 def test_guess_columns1():
     create="""CREATE TABLE test_guess_columns1 (
     id %s,
@@ -337,7 +338,7 @@ def test_guess_columns1():
     r2 INTEGER NOT NULL,
     UNIQUE (r1, r2)
     )""" % get_sequence_sql()
-    
+
     db=P.getConnection('pydotest')
     c=db.cursor()
     c.execute(create)
@@ -352,7 +353,7 @@ def test_guess_columns1():
         uniq=testclass.getUniquenessConstraints()
         seq=testclass.getSequences()
         assert set(cols)==set(('id', 'x', 'y', 'z', 'r1', 'r2'))
-        assert seq.keys()==['id']
+        assert list(seq.keys())==['id']
         assert uniq==frozenset((frozenset(('r1', 'r2')),
                                 frozenset(('x',)),
                                 frozenset(('id',))))
@@ -362,7 +363,7 @@ def test_guess_columns1():
             c.execute('drop table test_guess_columns1')
         else:
             db.rollback()
-        c.close()                               
+        c.close()
 
 @tag(*alltags)
 def test_unique5():
@@ -395,12 +396,12 @@ def test_picklebase1():
                 'nohat',
                 'nofrog',
                 'pig')
-    import cPickle
-    dump=cPickle.dumps(zingo, 2)
-    orig=cPickle.loads(dump)
+    import pickle
+    dump=pickle.dumps(zingo, 2)
+    orig=pickle.loads(dump)
     assert orig==zingo
     del zingo
-        
+
 class test_new1(Fixture):
     tags=alltags[:]
     class obj(P.PyDO):
@@ -427,7 +428,7 @@ class test_new1(Fixture):
         for i in range(100):
             self.obj.new(id=i, x=100)
         res=[x.id for x in self.obj.project('id').getSome(order='id')]
-        assert res==range(100)
+        assert res==list(range(100))
 
 
 class test_new2(base_fixture):
@@ -445,7 +446,7 @@ class test_new2(base_fixture):
                               y=100,
                               z=0)
         assert res.d==None
-        
+
 
 
 class test_update1(base_fixture):
@@ -516,7 +517,7 @@ class test_deleteSome1(base_fixture):
     tags=alltags
 
     def pre(self):
-        for x in xrange(200):
+        for x in range(200):
             self.B.new(x=random.randint(0, 1000))
 
     def run(self):
@@ -532,9 +533,9 @@ class test_deleteSome1(base_fixture):
 class test_updateSome1(base_fixture):
     usetables=('B',)
     tags=alltags
-    
+
     def pre(self):
-        for x in xrange(200):
+        for x in range(200):
             self.B.new(x=random.randint(0, 1000))
         c=self.db.cursor()
         sql='SELECT COUNT(*) FROM b WHERE x < 500'
@@ -555,9 +556,9 @@ class test_updateSome1(base_fixture):
 class test_updateSome2(base_fixture):
     usetables=('B',)
     tags=alltags
-    
+
     def pre(self):
-        for x in xrange(200):
+        for x in range(200):
             self.B.new(x=random.randint(0, 1000))
         c=self.db.cursor()
         sql='SELECT COUNT(*) FROM b WHERE x < 500'
@@ -578,9 +579,9 @@ class test_updateSome2(base_fixture):
 class test_updateSome3(base_fixture):
     usetables=('B',)
     tags=alltags
-    
+
     def pre(self):
-        for x in xrange(200):
+        for x in range(200):
             self.B.new(x=random.randint(0, 1000))
         c=self.db.cursor()
         sql='SELECT COUNT(*) FROM b WHERE x < 500'
@@ -597,7 +598,7 @@ class test_updateSome3(base_fixture):
         c=self.db.cursor()
         c.execute(sql)
         newcnt=c.fetchone()[0]
-        assert newcnt==self.count                
+        assert newcnt==self.count
 
 
 class test_delete1(base_fixture):
@@ -634,7 +635,7 @@ class test_delete2(base_fixture):
                    ('expected ValueError to be raised '
                     'when deleting an object without a '
                     'unique constraint')
-            
+
 
 class test_joinTable1(base_fixture):
     usetables=('A', 'C', 'A_C')
@@ -659,7 +660,7 @@ class test_joinTable1(base_fixture):
         j=o2.joinTable('id', 'a_c', 'a_id', 'c_id', self.C, 'id')
         assert len(j)==1
         assert j[0].id==1
-        
+
 class test_getSome1(base_fixture):
     usetables=('A',)
     tags=alltags
@@ -715,8 +716,8 @@ class test_getSome2(base_fixture):
     def run(self):
         some=self.B.getSome(x=None)
         assert len(some)==5
-        
-        
+
+
 
 class test_refresh1(base_fixture):
     usetables=('A',)
@@ -755,7 +756,7 @@ class test_refresh2(base_fixture):
                      z=0)
 
         assert n.id==1
-    
+
 class test_refresh3(base_fixture):
     usetables=('C',)
     tags=alltags
@@ -784,7 +785,7 @@ class test_refresh3(base_fixture):
             assert 0, "refresh should fail"
 
 
-            
+
 class test_group1(base_fixture):
     usetables=('C',)
     tags=alltags
@@ -802,7 +803,7 @@ class test_group1(base_fixture):
             res=p.getSome(s)
             assert len(res)==1
 
-        
+
 class test_foreignkey1(base_fixture):
     usetables=('A', 'B')
     tags=alltags
@@ -856,16 +857,16 @@ class test_foreignkey3(base_fixture):
     def run(self):
         assert self.f.A_C.a_id==1
         assert self.f.A_C.c_id==1
-        self.f.A_C=None        
-        
-        
+        self.f.A_C=None
+
+
 class test_one_to_many1(base_fixture):
     usetables=('A', 'B')
     tags=alltags
 
     def pre(self):
         self.B.getA=P.OneToMany('id', 'b_id', self.A)
-        n=itertools.count().next
+        n=itertools.count().__next__
         self.b1=b1=self.B.new(x=n())
         self.b2=b2=self.B.new(x=n())
         self.A.new(name='aardvark',
@@ -889,7 +890,7 @@ class test_one_to_many1(base_fixture):
         assert len(some)==3
         nuttin=self.b2.getA()
         assert len(nuttin)==0
-    
+
 
 class test_one_to_many2(base_fixture):
     usetables=('A_C', 'F')
@@ -961,7 +962,7 @@ class test_many_to_many1(base_fixture):
         assert o2 is not None
         j=o2.getC()
         assert len(j)==1
-        assert j[0].id==1    
+        assert j[0].id==1
 
 
 
@@ -972,7 +973,7 @@ class test_getCount1(base_fixture):
     def pre(self):
         for x in range(20):
             self.D.new(id=x, x=x)
-        
+
     def run(self):
         c=self.D.getCount(id=4)
         assert c == 1
@@ -986,7 +987,7 @@ class test_getCount1(base_fixture):
         c=self.D.getCount(P.OR(P.EQ(P.FIELD('id'), 5), P.GT(P.FIELD('x'), 10)))
         assert c == 10
 
-        
+
 class test_as1(base_fixture):
     usetables=['E']
     tags=alltags
@@ -1014,9 +1015,9 @@ class test_as1(base_fixture):
             res=p.getSome('user1 = %s group by user1', 'bongo')
         assert len(res)==1
         assert res[0].count==1
-        
 
-        
+
+
 class test_as2(base_fixture):
     usetables=['E']
     tags=alltags

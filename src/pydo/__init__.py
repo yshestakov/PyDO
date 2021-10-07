@@ -23,9 +23,10 @@ from pydo.multifetch import *
 
 # make __all__ nice
 from pydo.utils import getall
-__all__=getall('pydo.%s' % m for m in \
-               'exceptions field guesscache base operators dbi dbtypes log multifetch'.split())
+__all__=getall('pydo.%s' % m for m in
+               'exceptions field guesscache base operators dbi '
+               'dbtypes log multifetch'.split())
 del getall
 
 
-__version__='2.0.2'
+__version__='2.0.3'
