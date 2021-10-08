@@ -96,6 +96,10 @@ class SqliteDBI(DBIBase):
    def __init__(self, connectArgs, pool=None, verbose=False, initFunc=None):
       if pool and not hasattr(pool, 'connect'):
          pool=ConnectionPool()
+      if sys.version_info[0] == 3:
+          # sqlite3.Connection object has no `autocommit` attribute
+          # https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection
+          connectArgs['isolation_level'] = None
       super(SqliteDBI, self).__init__(connectArgs,
                                       sqlite.connect,
                                       sqlite,
@@ -122,8 +126,6 @@ class SqliteDBI(DBIBase):
       if res:
          return sorted(x[0] for x in res)
       return ()
-
-
 
    def describeTable(self, table, schema=None):
       if schema is not None:
@@ -165,7 +167,8 @@ class SqliteDBI(DBIBase):
       execute(sql)
       res=c.fetchall()
       for row in res:
-         seq, name, uneek=row
+         #if self.verbose: print(".row: %s" % repr(row))
+         seq, name, uneek = row[0:3]
          if uneek:
             sql="pragma index_info('%s')" % name
             execute(sql)
@@ -177,9 +180,15 @@ class SqliteDBI(DBIBase):
       return fields, unique
 
    def autocommit():
+      # sqlite3.Connection object has no `autocommit` attribute
+      # https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection
       def fget(self):
+         if sys.version_info[0] == 3:
+             return False
          return self.conn.autocommit
       def fset(self, val):
+         if sys.version_info[0] == 3:
+            raise RuntimeError("sqliteconn.autocommit isn't implemented")
          self.conn.autocommit=val
       return fget, fset, None, None
    autocommit=property(*autocommit())

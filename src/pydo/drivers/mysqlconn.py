@@ -80,6 +80,13 @@ class MysqlDBI(DBIBase):
         nullableFields=[]
         for row in res:
             name, tipe, nullable, key, default, extra=row
+            if nullable == 'NO':
+                nullable = False
+            elif nullable == 'YES':
+                nullable = True
+            else:
+                raise RuntimeError("%s: unknown `nullable` for column '%s'" %
+                                   (nullable, name))
             if nullable:
                 nullableFields.append(name)
             if (not nullable) and extra=='auto_increment':
