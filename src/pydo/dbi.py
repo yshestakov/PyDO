@@ -289,7 +289,8 @@ def initAlias(alias, driver, connectArgs, pool=None, verbose=False, init=None):
             # get rid of connection for the sake of comparison
             old.pop('connection', None)
             if data!=old:
-                raise ValueError("already initialized: %s" % alias)
+                raise ValueError("already initialized: %s: %r != %r" %
+                                 (alias, data, old))
         else:
             _aliases[alias]=data
     finally:

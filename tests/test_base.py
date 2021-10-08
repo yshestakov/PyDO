@@ -349,11 +349,11 @@ def test_guess_columns1():
             connectionAlias='pydotest'
 
         cols=testclass.getColumns()
-
         uniq=testclass.getUniquenessConstraints()
         seq=testclass.getSequences()
         assert set(cols)==set(('id', 'x', 'y', 'z', 'r1', 'r2'))
-        assert list(seq.keys())==['id']
+        _sk = list(seq.keys())
+        assert _sk == ['id'], "seq.keys is %r" % _sk
         assert uniq==frozenset((frozenset(('r1', 'r2')),
                                 frozenset(('x',)),
                                 frozenset(('id',))))

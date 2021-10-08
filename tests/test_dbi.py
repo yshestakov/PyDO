@@ -99,13 +99,13 @@ def test_swapConnection1():
 @tag(*dbitags)
 def test_pool1():
     stuff=D._aliases['pydotest'].copy()
-    D.initAlias('pydotestpool',
+    try:
+        D.initAlias('pydotestpool',
                 stuff['driver'],
                 stuff['connectArgs'],
                 D.ConnectionPool(max_poolsize=4, keep_poolsize=4),
                 stuff['verbose'])
-    db=D.getConnection('pydotestpool')
-    try:
+        db=D.getConnection('pydotestpool')
         assert len(db.pool._busy)==0
         assert len(db.pool._free)==0
         conn=db.conn
@@ -161,6 +161,7 @@ def test_pool2():
     # assertion means: no connection has been handed out
     # to a plural number of simultaneously active threads
     assert len(connids)== len(set(connids))
+    D.delAlias('pydotestpool')
 
 
 @tag(*dbitags)

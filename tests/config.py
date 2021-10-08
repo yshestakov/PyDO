@@ -15,15 +15,13 @@ from testingtesting import _defaultNamePat
 
 # https://stackoverflow.com/questions/436198/what-is-an-alternative-to-execfile-in-python-3
 def _execfile(cmd, g, l):
-    print("_execfile(%r, %r, %r)" % (cmd, g, l))
     exec(open(cmd).read(), g, l)
 if sys.version_info[0] == 3:
     execfile=_execfile
 
-
-DEFAULT_CONFIG='~/.pydotestrc'
-
-ALLDRIVERS=_driverConfig.keys()
+DEFAULT_CONFIG = '~/.pydotestrc'
+ALLDRIVERS = _driverConfig.keys()
+DRIVER = None
 
 def _readConfigFile(fname=DEFAULT_CONFIG):
     fname=os.path.expanduser(fname)
@@ -73,7 +71,7 @@ def readCmdLine(args, usage=None):
                       default=False)
     opts, args=parser.parse_args(args)
     try:
-        c=_readConfigFile(opts.config)
+        c = _readConfigFile(opts.config)
     except:
         traceback.print_exc()
         parser.error("error reading config file!")
@@ -93,18 +91,17 @@ def readCmdLine(args, usage=None):
     retdrivers={}
     # init all the aliases
     for d in drivers:
-        try:
-            connectArgs=c[d]
-        except:
+        if not d in c:
             print("no config for driver: %s" % d, file=sys.stderr)
         else:
+            connectArgs=c[d]
             connectArgs['driver']=d
             if opts.verbose is not None:
                 connectArgs['verbose']=opts.verbose
             # the connection alias will always be "pydotest"
-            connectArgs['alias']='pydotest'
             if not isinstance(connectArgs, dict):
                 parser.error("configuration error: must be a dict, got a %s" % type(connectArgs))
+            connectArgs['alias']='pydotest'
             retdrivers[d]=connectArgs
 
     if opts.pattern:
@@ -116,5 +113,4 @@ def readCmdLine(args, usage=None):
         pat=_defaultNamePat
 
     return retdrivers, tags, pat, opts.unittest
-
 

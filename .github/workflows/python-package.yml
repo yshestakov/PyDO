@@ -26,6 +26,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        # sudo apt-get -yq install libmysqlclient-dev python3-mysqldb
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
@@ -37,4 +38,5 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest || true
+        # pytest || true
+        PYTHONPATH=src/ python tests/runtests.py -c tests/pydotest.rc -d "sqlite"
